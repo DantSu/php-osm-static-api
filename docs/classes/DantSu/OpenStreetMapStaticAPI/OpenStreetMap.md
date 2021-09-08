@@ -1,7 +1,7 @@
 
 # OpenStreetMap
 
-DantSu\OpenStreetMapStaticAPI\BoundingBox define the bounding box of the static map.
+DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from Open Street Map with markers and lines.
 
 
 
