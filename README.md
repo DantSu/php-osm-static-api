@@ -1,6 +1,6 @@
 # PHP OpenStreetMap Static API
 
-PHP library to easily get static image from OpenStreetMap (OSM), add markers and draw lines.
+PHP library to easily get static image from Open Street Map with markers and lines.
 
 ## ✨ Supporting
 

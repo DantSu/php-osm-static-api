@@ -80,11 +80,13 @@ class OpenStreetMap
      * OpenStreetMap constructor.
      * @param LatLng $centerMap Latitude and longitude of the map center
      * @param int $zoom Zoom
-     * @param XY $outputPxSize Width and height of the generated map image
+     * @param int $imageWidth Width of the generated map image
+     * @param int $imageHeight Height of the generated map image
      */
-    public function __construct(LatLng $centerMap, int $zoom, XY $outputPxSize)
+    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight)
     {
         $this->zoom = $zoom;
+        $outputPxSize = new XY($imageWidth, $imageHeight);
 
         $x = static::lngToXTile($centerMap->getLng(), $zoom);
         $y = static::latToYTile($centerMap->getLat(), $zoom);

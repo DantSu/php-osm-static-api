@@ -147,7 +147,8 @@ OpenStreetMap constructor.
 |-----------|------|-------------|
 | `centerMap` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the map center |
 | `zoom` | **int** | Zoom |
-| `outputPxSize` | **\DantSu\OpenStreetMapStaticAPI\XY** | Width and height of the generated map image |
+| `imageWidth` | **int** | Width of the generated map image |
+| `imageHeight` | **int** | Height of the generated map image |
 
 
 
