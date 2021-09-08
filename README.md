@@ -16,7 +16,7 @@ composer require dantsu/php-osm-static-api
 
 ## How to use
 
-Create a empty image, draw on it and display it :
+Generate OpenStreetMap static image with marker and line :
 
 ```php
 use \DantSu\OpenStreetMapStaticAPI\OpenStreetMap;
