@@ -1,0 +1,33 @@
+{
+  "name": "dantsu/php-osm-static-api",
+  "type": "library",
+  "description": "PHP library to easily get static image from OpenStreetMap (OSM), add markers and draw lines.",
+  "keywords": [
+    "php",
+    "osm",
+    "openstreetmap",
+    "map",
+    "static",
+    "image",
+    "maps",
+    "api"
+  ],
+  "homepage": "https://github.com/DantSu/php-osm-static-api",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Franck ALARY",
+      "homepage": "https://github.com/DantSu",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "dantsu/php-image-editor": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "DantSu\\OpenStreetMapStaticAPI\\": "src/"
+    }
+  }
+}

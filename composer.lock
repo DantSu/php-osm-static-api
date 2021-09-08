@@ -1,0 +1,80 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d9c3272fd1c767a7284bc3ce9036bf4a",
+    "packages": [
+        {
+            "name": "dantsu/php-image-editor",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DantSu/php-image-editor.git",
+                "reference": "1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DantSu/php-image-editor/zipball/1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e",
+                "reference": "1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DantSu\\PHPImageEditor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck ALARY",
+                    "homepage": "https://github.com/DantSu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP library to easily edit image with GD extension.",
+            "homepage": "https://github.com/DantSu/php-image-editor",
+            "keywords": [
+                "GD2",
+                "edit",
+                "edition",
+                "editor",
+                "image",
+                "photo",
+                "php",
+                "picture"
+            ],
+            "support": {
+                "issues": "https://github.com/DantSu/php-image-editor/issues",
+                "source": "https://github.com/DantSu/php-image-editor/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/DantSu",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-09-08T09:00:34+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.0"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
+}
