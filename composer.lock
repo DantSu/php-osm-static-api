@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "dantsu/php-image-editor",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DantSu/php-image-editor.git",
-                "reference": "1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e"
+                "reference": "de7a95528de119648852bf864902c1c429363403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DantSu/php-image-editor/zipball/1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e",
-                "reference": "1dcab184b8cf7bc46440336bc292a1cf9e4b6b8e",
+                "url": "https://api.github.com/repos/DantSu/php-image-editor/zipball/de7a95528de119648852bf864902c1c429363403",
+                "reference": "de7a95528de119648852bf864902c1c429363403",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DantSu/php-image-editor/issues",
-                "source": "https://github.com/DantSu/php-image-editor/tree/1.0.0"
+                "source": "https://github.com/DantSu/php-image-editor/tree/1.0.1"
             },
             "funding": [
                 {
@@ -63,7 +63,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-08T09:00:34+00:00"
+            "time": "2021-09-08T15:47:48+00:00"
         }
     ],
     "packages-dev": [],

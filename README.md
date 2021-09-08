@@ -24,10 +24,11 @@ use \DantSu\OpenStreetMapStaticAPI\LatLng;
 use \DantSu\OpenStreetMapStaticAPI\Line;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
 
-header('Content-type: image/png');
-(new OpenStreetMap(new LatLng(44.351933, 2.568113), 18, 600, 400))
+\header('Content-type: image/png');
+(new OpenStreetMap(new LatLng(44.351933, 2.568113), 17, 600, 400))
     ->addMarkers(
         (new Markers(__DIR__ . '/resources/marker.png'))
+            ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)
             ->addMarker(new LatLng(44.351933, 2.568113))
     )
     ->addLine(
@@ -43,6 +44,7 @@ header('Content-type: image/png');
     ->getImage()
     ->displayPNG();
 ```
+
 ![Exported OpenStreetMap image](./src/samples/resources/sample1.png)
 
 ## Documentation
