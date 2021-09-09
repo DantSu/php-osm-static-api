@@ -30,6 +30,8 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
         (new Markers(__DIR__ . '/resources/marker.png'))
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)
             ->addMarker(new LatLng(44.351933, 2.568113))
+            ->addMarker(new LatLng(44.351510, 2.570020))
+            ->addMarker(new LatLng(44.351873, 2.566250))
     )
     ->addLine(
         (new Line('FF0000', 2))

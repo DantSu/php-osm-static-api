@@ -138,7 +138,7 @@ class OpenStreetMap
      * @see https://github.com/DantSu/php-image-editor See more about DantSu\PHPImageEditor\Image
      * @return Image An instance of DantSu\PHPImageEditor\Image
      */
-    public function getMapImage(): Image
+    protected function getMapImage(): Image
     {
         $bbox = $this->boundingBox;
         $xTile = static::lngToXTile($bbox->getBottomLeft()->getLng(), $this->zoom);
@@ -165,6 +165,35 @@ class OpenStreetMap
     }
 
     /**
+     * Draw OpenStreetMap attribution at the right bottom of the image
+     * @param Image $image The image of the map
+     * @return Image The image of the map with attribution
+     */
+    protected function drawAttribution(Image $image): Image
+    {
+        $margin = 5;
+        $attribution = function (Image $image, $margin): array {
+            return $image->writeTextAndGetBoundingBox(
+                '© OpenStreetMap contributors',
+                __DIR__ . '/resources/font.ttf',
+                10,
+                '0078A8',
+                $margin,
+                $margin,
+                Image::ALIGN_LEFT,
+                Image::ALIGN_TOP
+            );
+        };
+
+        $bbox = $attribution(Image::newCanvas(1, 1), $margin);
+        $imageAttribution = Image::newCanvas($bbox['bottom-right']['x'] + $margin, $bbox['bottom-right']['y'] + $margin);
+        $imageAttribution->drawRectangle(0, 0, $imageAttribution->getWidth(), $imageAttribution->getHeight(), 'FFFFFF33');
+        $attribution($imageAttribution, $margin);
+
+        return $image->pasteOn($imageAttribution, Image::ALIGN_RIGHT, Image::ALIGN_BOTTOM);
+    }
+
+    /**
      * Get the map image with markers and lines.
      *
      * @see https://github.com/DantSu/php-image-editor See more about DantSu\PHPImageEditor\Image
@@ -182,6 +211,6 @@ class OpenStreetMap
             $markers->draw($image, $this->boundingBox);
         }
 
-        return $image;
+        return $this->drawAttribution($image);
     }
 }

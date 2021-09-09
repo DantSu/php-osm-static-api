@@ -24,4 +24,4 @@ This is an automatically generated documentation for **PHP OpenStreetMap Static 
 
 
 ---
-> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2021-09-09 using [phpDocumentor](http://www.phpdoc.org/)

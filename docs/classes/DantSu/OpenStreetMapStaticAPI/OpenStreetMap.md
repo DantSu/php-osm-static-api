@@ -23,7 +23,6 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 - [addMarkers](#-addmarkers) 
 - [addLine](#-addline) 
 - [getBoundingBox](#-getboundingbox) 
-- [getMapImage](#-getmapimage) 
 - [getImage](#-getimage) 
 
 ### ::lngToXTile
@@ -223,28 +222,6 @@ Get the bounding box of the map
 
 
 ---
-### ->getMapImage
-
-Get only the map image.
-
-
-
-
-
-
-
-
-
-#### Return Value:
-
- **\DantSu\PHPImageEditor\Image** : An instance of DantSu\PHPImageEditor\Image
-
-
-#### See Also:
-
-* https://github.com/DantSu/php-image-editor - See more about DantSu\PHPImageEditor\Image
-
----
 ### ->getImage
 
 Get the map image with markers and lines.
@@ -270,4 +247,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2021-09-09 using [phpDocumentor](http://www.phpdoc.org/)
