@@ -165,6 +165,14 @@ class OpenStreetMap
     }
 
     /**
+     * get attribution text
+     * @return string Attribution text
+     */
+    protected function getAttributionText() {
+        return '© OpenStreetMap contributors';
+    }
+
+    /**
      * Draw OpenStreetMap attribution at the right bottom of the image
      * @param Image $image The image of the map
      * @return Image The image of the map with attribution
@@ -174,7 +182,7 @@ class OpenStreetMap
         $margin = 5;
         $attribution = function (Image $image, $margin): array {
             return $image->writeTextAndGetBoundingBox(
-                '© OpenStreetMap contributors',
+                $this->getAttributionText(),
                 __DIR__ . '/resources/font.ttf',
                 10,
                 '0078A8',
