@@ -5,7 +5,7 @@ namespace DantSu\OpenStreetMapStaticAPI;
 use DantSu\PHPImageEditor\Image;
 
 /**
- * DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from Open Street Map with markers and lines.
+ * DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers and lines.
  *
  * @package DantSu\OpenStreetMapStaticAPI
  * @author Franck Alary
