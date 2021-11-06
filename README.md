@@ -2,6 +2,8 @@
 
 PHP library to easily get static image from OpenStreetMap with markers and lines.
 
+This project uses the [Tile Server](https://wiki.openstreetmap.org/wiki/Tile_servers) of the Open Streetmap Foundation which runs entirely on donated resources, see [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/) for more information.
+
 ## ✨ Supporting
 
 ⭐ Star this repository to support this project. You will contribute to increase the visibility of this library 🙂
@@ -59,6 +61,7 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 | [Markers](./docs/classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
 | [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\BoundingBox define the bounding box of the static map.|
 | [XY](./docs/classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
+
 
 ## Contributing
 
