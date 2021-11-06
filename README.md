@@ -60,6 +60,8 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 | [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\BoundingBox define the bounding box of the static map.|
 | [XY](./docs/classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
 
+This project uses the [Tile Server](https://wiki.openstreetmap.org/wiki/Tile_servers) of the Open Streetmap Foundation which runs entirely on donated resources, see [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/) for more information.
+
 ## Contributing
 
 Please fork this repository and contribute back using pull requests.
