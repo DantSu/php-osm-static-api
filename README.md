@@ -2,7 +2,7 @@
 
 PHP library to easily get static image from OpenStreetMap with markers and lines.
 
-This project uses the [Tile Server](https://wiki.openstreetmap.org/wiki/Tile_servers) of the Open Streetmap Foundation which runs entirely on donated resources, see [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/) for more information.
+This project uses the [Tile Server](https://wiki.openstreetmap.org/wiki/Tile_servers) of the OpenStreetMap Foundation which runs entirely on donated resources, see [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/) for more information.
 
 ## ✨ Supporting
 
