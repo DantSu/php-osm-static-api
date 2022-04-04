@@ -1,3 +1,7 @@
+[![Packagist](https://img.shields.io/packagist/dt/DantSu/php-osm-static-api.svg)](https://packagist.org/packages/DantSu/php-osm-static-api)
+[![Latest Stable Version](https://poser.pugx.org/DantSu/php-osm-static-api/v/stable)](https://packagist.org/packages/DantSu/php-osm-static-api)
+[![GitHub license](https://img.shields.io/github/license/DantSu/php-osm-static-api.svg)](https://github.com/DantSu/php-osm-static-api/blob/master/LICENSE)
+
 # PHP OpenStreetMap Static API
 
 PHP library to easily get static image from OpenStreetMap with markers and lines.
