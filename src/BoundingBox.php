@@ -82,7 +82,7 @@ class BoundingBox
     {
         return new XY(
             \round(($latLng->getLng() - $this->getBottomLeft()->getLng()) * $this->coef->getLng()),
-            \round($this->outputPxSize->getY() - ($latLng->getLat() - $this->getBottomLeft()->getLat()) * $this->coef->getLat())
+            $this->outputPxSize->getY() - \round(($latLng->getLat() - $this->getBottomLeft()->getLat()) * $this->coef->getLat())
         );
     }
 

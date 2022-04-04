@@ -33,7 +33,7 @@ class OpenStreetMap
      */
     public static function latToYTile(float $lat, int $zoom): int
     {
-        return floor((1 - \log(\tan(\deg2rad($lat)) + 1 / \cos(\deg2rad($lat))) / M_PI) / 2 * \pow(2, $zoom));
+        return \floor((1 - \log(\tan(\deg2rad($lat)) + 1 / \cos(\deg2rad($lat))) / M_PI) / 2 * \pow(2, $zoom));
     }
 
     /**
@@ -48,7 +48,7 @@ class OpenStreetMap
     }
 
     /**
-     * Convert vertical OpenStreetMap tile number ad zoom to latitude.
+     * Convert vertical OpenStreetMap tile number and zoom to latitude.
      * @param int $y Vertical OpenStreetMap tile id
      * @param int $zoom Zoom
      * @return float Latitude of the given OpenStreetMap tile id and zoom
@@ -141,8 +141,8 @@ class OpenStreetMap
     protected function getMapImage(): Image
     {
         $bbox = $this->boundingBox;
+        $yTile = static::latToYTile($bbox->getBottomLeft()->getLat(), $this->zoom);
         $xTile = static::lngToXTile($bbox->getBottomLeft()->getLng(), $this->zoom);
-        $yTile = static::latToYTile($bbox->getTopRight()->getLat(), $this->zoom);
         $startPos = $bbox->convertLatLngToPxPosition(new LatLng(
             static::yTileToLat($yTile, $this->zoom),
             static::xTileToLng($xTile, $this->zoom)
@@ -150,15 +150,14 @@ class OpenStreetMap
 
         $image = Image::newCanvas($bbox->getOutputPxSize()->getX(), $bbox->getOutputPxSize()->getY());
 
-        $tmpYTile = $yTile;
-        for ($y = $startPos->getY(); $y < $bbox->getOutputPxSize()->getY(); $y += 256) {
+        for ($y = $startPos->getY(); $y > -255; $y -= 256) {
             $tmpXTile = $xTile;
             for ($x = $startPos->getX(); $x < $bbox->getOutputPxSize()->getX(); $x += 256) {
-                $i = Image::fromCurl('https://tile.openstreetmap.org/' . $this->zoom . '/' . $tmpXTile . '/' . $tmpYTile . '.png');
+                $i = Image::fromCurl('https://tile.openstreetmap.org/' . $this->zoom . '/' . $tmpXTile . '/' . $yTile . '.png');
                 $image->pasteOn($i, $x, $y);
                 ++$tmpXTile;
             }
-            ++$tmpYTile;
+            --$yTile;
         }
 
         return $image;
