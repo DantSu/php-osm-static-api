@@ -163,15 +163,42 @@ class MapData
         $x = static::lngToXTile($centerMap->getLng(), $zoom);
         $y = static::latToYTile($centerMap->getLat(), $zoom);
 
-        $this->tileTopLeft = new XY($x - \ceil($startX / 256), $y - \ceil($startY / 256));
-        $this->tileBottomRight = new XY($x + \floor(($outputSize->getX() - $startX) / 256), $y + \floor(($outputSize->getY() - $startY) / 256));
-        $this->mapCropTopLeft = new XY(256 - $startX % 256, 256 - $startY % 256);
-        $this->mapCropBottomRight = new XY(($outputSize->getX() - $startX) % 256, ($outputSize->getY() - $startY) % 256);
+        $rightSize = $outputSize->getX() - $startX;
+        $bottomSize = $outputSize->getY() - $startY;
 
-        $this->latLngTopLeft = new LatLng(static::tilePxToLat($this->mapCropTopLeft->getY(), $this->tileTopLeft->getY(), $zoom), static::tilePxToLng($this->mapCropTopLeft->getX(), $this->tileTopLeft->getX(), $zoom));
-        $this->latLngTopRight = new LatLng(static::tilePxToLat($this->mapCropTopLeft->getY(), $this->tileTopLeft->getY(), $zoom), static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom));
-        $this->latLngBottomLeft = new LatLng(static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom), static::tilePxToLng($this->mapCropTopLeft->getX(), $this->tileTopLeft->getX(), $zoom));
-        $this->latLngBottomRight = new LatLng(static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom), static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom));
+        $this->mapCropTopLeft = new XY(
+            $startX < 0 ? \abs($startX) : ($startX % 256 == 0 ? 0 : 256 - $startX % 256),
+            $startY < 0 ? \abs($startY) : ($startY % 256 == 0 ? 0 : 256 - $startY % 256)
+        );
+        $this->mapCropBottomRight = new XY(
+            ($rightSize % 256 == 0 ? 0 : 256 - $rightSize % 256),
+            ($bottomSize % 256 == 0 ? 0 : 256 - $bottomSize % 256)
+        );
+        $this->tileTopLeft = new XY(
+            $x - \ceil($startX / 256),
+            $y - \ceil($startY / 256)
+        );
+        $this->tileBottomRight = new XY(
+            $x - 1 + \ceil($rightSize / 256),
+            $y - 1 + \ceil($bottomSize / 256)
+        );
+
+        $this->latLngTopLeft = new LatLng(
+            static::tilePxToLat($this->mapCropTopLeft->getY(), $this->tileTopLeft->getY(), $zoom),
+            static::tilePxToLng($this->mapCropTopLeft->getX(), $this->tileTopLeft->getX(), $zoom)
+        );
+        $this->latLngTopRight = new LatLng(
+            static::tilePxToLat($this->mapCropTopLeft->getY(), $this->tileTopLeft->getY(), $zoom),
+            static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
+        );
+        $this->latLngBottomLeft = new LatLng(
+            static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
+            static::tilePxToLng($this->mapCropTopLeft->getX(), $this->tileTopLeft->getX(), $zoom)
+        );
+        $this->latLngBottomRight = new LatLng(
+            static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
+            static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
+        );
     }
 
 
