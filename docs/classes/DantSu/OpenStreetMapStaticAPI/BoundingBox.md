@@ -129,4 +129,4 @@ Convert a latitude and longitude to a XY pixel position in the image
 
 
 ---
-> Automatically generated from source code comments on 2021-09-09 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-04-06 using [phpDocumentor](http://www.phpdoc.org/)

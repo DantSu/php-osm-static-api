@@ -1,7 +1,7 @@
 <?php
 require_once '../../vendor/autoload.php';
 
-require_once '../BoundingBox.php';
+require_once '../MapData.php';
 require_once '../LatLng.php';
 require_once '../Line.php';
 require_once '../Markers.php';

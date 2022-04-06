@@ -59,9 +59,9 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 
 | Class | Description |
 |---    |---          |
-| [BoundingBox](./docs/classes/DantSu/OpenStreetMapStaticAPI/BoundingBox.md) | DantSu\OpenStreetMapStaticAPI\BoundingBox define the bounding box of the static map.|
 | [LatLng](./docs/classes/DantSu/OpenStreetMapStaticAPI/LatLng.md) | DantSu\OpenStreetMapStaticAPI\LatLng define latitude and longitude for map, lines, markers.|
 | [Line](./docs/classes/DantSu/OpenStreetMapStaticAPI/Line.md) | DantSu\OpenStreetMapStaticAPI\Line draw line on the map.|
+| [MapData](./docs/classes/DantSu/OpenStreetMapStaticAPI/MapData.md) | DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pixel position.|
 | [Markers](./docs/classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
 | [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\BoundingBox define the bounding box of the static map.|
 | [XY](./docs/classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|

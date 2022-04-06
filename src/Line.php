@@ -55,17 +55,17 @@ class Line
      * @see https://github.com/DantSu/php-image-editor See more about DantSu\PHPImageEditor\Image
      *
      * @param Image $image The map image (An instance of DantSu\PHPImageEditor\Image)
-     * @param BoundingBox $bbox Bounding box of the map
+     * @param MapData $mapData Bounding box of the map
      * @return $this Fluent interface
      */
-    public function draw(Image $image, BoundingBox $bbox): Line
+    public function draw(Image $image, MapData $mapData): Line
     {
         /**
          * @var $cPoints XY[]
          */
         $cPoints = \array_map(
-            function (LatLng $p) use ($bbox) {
-                return $bbox->convertLatLngToPxPosition($p);
+            function (LatLng $p) use ($mapData) {
+                return $mapData->convertLatLngToPxPosition($p);
             },
             $this->points
         );

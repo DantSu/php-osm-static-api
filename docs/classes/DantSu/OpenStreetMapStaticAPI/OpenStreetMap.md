@@ -15,120 +15,12 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 
 ## Methods
 
-- *(static)* [lngToXTile](#lngtoxtile) 
-- *(static)* [latToYTile](#lattoytile) 
-- *(static)* [xTileToLng](#xtiletolng) 
-- *(static)* [yTileToLat](#ytiletolat) 
 - [__construct](#-__construct) 
 - [addMarkers](#-addmarkers) 
 - [addLine](#-addline) 
-- [getBoundingBox](#-getboundingbox) 
+- [getMapData](#-getmapdata) 
 - [getImage](#-getimage) 
 
-### ::lngToXTile
-
-Convert longitude and zoom to horizontal OpenStreetMap tile number.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `lon` | **float** | Longitude |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **int** : OpenStreetMap tile id of the given longitude and zoom
-
-
-
----
-### ::latToYTile
-
-Convert latitude and zoom to vertical OpenStreetMap tile number.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `lat` | **float** | Latitude |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **int** : OpenStreetMap tile id of the given latitude and zoom
-
-
-
----
-### ::xTileToLng
-
-Convert horizontal OpenStreetMap tile number ad zoom to longitude.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `x` | **int** | Horizontal OpenStreetMap tile id |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : Longitude of the given OpenStreetMap tile id and zoom
-
-
-
----
-### ::yTileToLat
-
-Convert vertical OpenStreetMap tile number ad zoom to latitude.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `y` | **int** | Vertical OpenStreetMap tile id |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : Latitude of the given OpenStreetMap tile id and zoom
-
-
-
----
 ### ->__construct
 
 OpenStreetMap constructor.
@@ -203,7 +95,7 @@ Add a line on the map
 
 
 ---
-### ->getBoundingBox
+### ->getMapData
 
 Get the bounding box of the map
 
@@ -217,7 +109,7 @@ Get the bounding box of the map
 
 #### Return Value:
 
- **\DantSu\OpenStreetMapStaticAPI\BoundingBox** : 
+ **\DantSu\OpenStreetMapStaticAPI\MapData** : 
 
 
 
@@ -247,4 +139,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-09 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-04-06 using [phpDocumentor](http://www.phpdoc.org/)

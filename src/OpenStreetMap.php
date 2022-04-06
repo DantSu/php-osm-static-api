@@ -15,57 +15,9 @@ use DantSu\PHPImageEditor\Image;
 class OpenStreetMap
 {
     /**
-     * Convert longitude and zoom to horizontal OpenStreetMap tile number.
-     * @param float $lon Longitude
-     * @param int $zoom Zoom
-     * @return int OpenStreetMap tile id of the given longitude and zoom
+     * @var MapData Bounding box of the map
      */
-    public static function lngToXTile(float $lon, int $zoom): int
-    {
-        return \floor(($lon + 180) / 360 * \pow(2, $zoom));
-    }
-
-    /**
-     * Convert latitude and zoom to vertical OpenStreetMap tile number.
-     * @param float $lat Latitude
-     * @param int $zoom Zoom
-     * @return int OpenStreetMap tile id of the given latitude and zoom
-     */
-    public static function latToYTile(float $lat, int $zoom): int
-    {
-        return \floor((1 - \log(\tan(\deg2rad($lat)) + 1 / \cos(\deg2rad($lat))) / M_PI) / 2 * \pow(2, $zoom));
-    }
-
-    /**
-     * Convert horizontal OpenStreetMap tile number ad zoom to longitude.
-     * @param int $x Horizontal OpenStreetMap tile id
-     * @param int $zoom Zoom
-     * @return float Longitude of the given OpenStreetMap tile id and zoom
-     */
-    public static function xTileToLng(int $x, int $zoom): float
-    {
-        return $x / \pow(2, $zoom) * 360 - 180;
-    }
-
-    /**
-     * Convert vertical OpenStreetMap tile number and zoom to latitude.
-     * @param int $y Vertical OpenStreetMap tile id
-     * @param int $zoom Zoom
-     * @return float Latitude of the given OpenStreetMap tile id and zoom
-     */
-    public static function yTileToLat(int $y, int $zoom): float
-    {
-        return \rad2deg(\atan(\sinh(M_PI * (1 - 2 * $y / \pow(2, $zoom)))));
-    }
-
-    /**
-     * @var int Zoom
-     */
-    protected $zoom;
-    /**
-     * @var BoundingBox Bounding box of the map
-     */
-    protected $boundingBox;
+    protected $mapData;
     /**
      * @var Markers[] Array of Markers instances
      */
@@ -85,20 +37,7 @@ class OpenStreetMap
      */
     public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight)
     {
-        $this->zoom = $zoom;
-        $outputPxSize = new XY($imageWidth, $imageHeight);
-
-        $x = static::lngToXTile($centerMap->getLng(), $zoom);
-        $y = static::latToYTile($centerMap->getLat(), $zoom);
-
-        $halfLngWidth = ((static::xTileToLng($x + 1, $zoom) - static::xTileToLng($x, $zoom)) / 256) * $outputPxSize->getX() / 2;
-        $halfLatHeight = ((static::yTileToLat($y, $zoom) - static::yTileToLat($y + 1, $zoom)) / 256) * $outputPxSize->getY() / 2;
-
-        $this->boundingBox = new BoundingBox(
-            new LatLng($centerMap->getLat() - $halfLatHeight, $centerMap->getLng() - $halfLngWidth),
-            new LatLng($centerMap->getLat() + $halfLatHeight, $centerMap->getLng() + $halfLngWidth),
-            $outputPxSize
-        );
+        $this->mapData = new MapData($centerMap, $zoom, new XY($imageWidth, $imageHeight));
     }
 
     /**
@@ -125,11 +64,11 @@ class OpenStreetMap
 
     /**
      * Get the bounding box of the map
-     * @return BoundingBox
+     * @return MapData
      */
-    public function getBoundingBox(): BoundingBox
+    public function getMapData(): MapData
     {
-        return $this->boundingBox;
+        return $this->mapData;
     }
 
     /**
@@ -140,24 +79,21 @@ class OpenStreetMap
      */
     protected function getMapImage(): Image
     {
-        $bbox = $this->boundingBox;
-        $yTile = static::latToYTile($bbox->getBottomLeft()->getLat(), $this->zoom);
-        $xTile = static::lngToXTile($bbox->getBottomLeft()->getLng(), $this->zoom);
-        $startPos = $bbox->convertLatLngToPxPosition(new LatLng(
-            static::yTileToLat($yTile, $this->zoom),
-            static::xTileToLng($xTile, $this->zoom)
-        ));
+        $imgSize = $this->mapData->getOutputSize();
+        $startX = $this->mapData->getMapCropTopLeft()->getX() * -1;
+        $startY = $this->mapData->getMapCropTopLeft()->getY() * -1;
+        $yTile = $this->mapData->getTileTopLeft()->getY();
 
-        $image = Image::newCanvas($bbox->getOutputPxSize()->getX(), $bbox->getOutputPxSize()->getY());
+        $image = Image::newCanvas($imgSize->getX(), $imgSize->getY());
 
-        for ($y = $startPos->getY(); $y > -255; $y -= 256) {
-            $tmpXTile = $xTile;
-            for ($x = $startPos->getX(); $x < $bbox->getOutputPxSize()->getX(); $x += 256) {
-                $i = Image::fromCurl('https://tile.openstreetmap.org/' . $this->zoom . '/' . $tmpXTile . '/' . $yTile . '.png');
+        for ($y = $startY; $y < $imgSize->getY(); $y += 256) {
+            $xTile = $this->mapData->getTileTopLeft()->getX();
+            for ($x = $startX; $x < $imgSize->getX(); $x += 256) {
+                $i = Image::fromCurl('https://tile.openstreetmap.org/' . $this->mapData->getZoom() . '/' . $xTile . '/' . $yTile . '.png');
                 $image->pasteOn($i, $x, $y);
-                ++$tmpXTile;
+                ++$xTile;
             }
-            --$yTile;
+            ++$yTile;
         }
 
         return $image;
@@ -167,7 +103,8 @@ class OpenStreetMap
      * get attribution text
      * @return string Attribution text
      */
-    protected function getAttributionText() {
+    protected function getAttributionText()
+    {
         return '© OpenStreetMap contributors';
     }
 
@@ -211,11 +148,11 @@ class OpenStreetMap
         $image = $this->getMapImage();
 
         foreach ($this->lines as $line) {
-            $line->draw($image, $this->boundingBox);
+            $line->draw($image, $this->mapData);
         }
 
         foreach ($this->markers as $markers) {
-            $markers->draw($image, $this->boundingBox);
+            $markers->draw($image, $this->mapData);
         }
 
         return $this->drawAttribution($image);

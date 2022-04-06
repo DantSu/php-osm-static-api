@@ -57,8 +57,8 @@ class Markers
 
     /**
      * Define the anchor point of the image marker.
-     * @param string $horizontalAnchor Horizontal anchor in pixel or you can use `Markers::ANCHOR_LEFT`, `Markers::ANCHOR_CENTER`, `Markers::ANCHOR_RIGHT`
-     * @param string $verticalAnchor Vertical anchor in pixel or you can use `Markers::ANCHOR_TOP`, `Markers::ANCHOR_MIDDLE`, `Markers::ANCHOR_BOTTOM`
+     * @param int|string $horizontalAnchor Horizontal anchor in pixel or you can use `Markers::ANCHOR_LEFT`, `Markers::ANCHOR_CENTER`, `Markers::ANCHOR_RIGHT`
+     * @param int|string $verticalAnchor Vertical anchor in pixel or you can use `Markers::ANCHOR_TOP`, `Markers::ANCHOR_MIDDLE`, `Markers::ANCHOR_BOTTOM`
      * @return $this Fluent interface
      */
     public function setAnchor($horizontalAnchor, $verticalAnchor): Markers
@@ -73,10 +73,10 @@ class Markers
      *
      * @see https://github.com/DantSu/php-image-editor See more about DantSu\PHPImageEditor\Image
      * @param Image $image The map image (An instance of DantSu\PHPImageEditor\Image)
-     * @param BoundingBox $bbox Bounding box of the map
+     * @param MapData $mapData Bounding box of the map
      * @return $this Fluent interface
      */
-    public function draw(Image $image, BoundingBox $bbox): Markers
+    public function draw(Image $image, MapData $mapData): Markers
     {
         $imageMarginLeft = $this->horizontalAnchor;
         switch ($imageMarginLeft) {
@@ -105,8 +105,8 @@ class Markers
         }
 
         foreach ($this->coordinates as $coordinate) {
-            $xy = $bbox->convertLatLngToPxPosition($coordinate);
-            $image->pasteOn($this->image, $xy->getX() - ((int) $imageMarginLeft), $xy->getY() - ((int) $imageMarginTop));
+            $xy = $mapData->convertLatLngToPxPosition($coordinate);
+            $image->pasteOn($this->image, $xy->getX() + 1 - $imageMarginLeft, $xy->getY() + 1 - $imageMarginTop);
         }
 
         return $this;

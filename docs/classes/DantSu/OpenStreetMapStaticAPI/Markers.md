@@ -92,8 +92,8 @@ Define the anchor point of the image marker.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `horizontalAnchor` | **string** | Horizontal anchor in pixel or you can use `Markers::ANCHOR_LEFT`, `Markers::ANCHOR_CENTER`, `Markers::ANCHOR_RIGHT` |
-| `verticalAnchor` | **string** | Vertical anchor in pixel or you can use `Markers::ANCHOR_TOP`, `Markers::ANCHOR_MIDDLE`, `Markers::ANCHOR_BOTTOM` |
+| `horizontalAnchor` | **int&#124;string** | Horizontal anchor in pixel or you can use `Markers::ANCHOR_LEFT`, `Markers::ANCHOR_CENTER`, `Markers::ANCHOR_RIGHT` |
+| `verticalAnchor` | **int&#124;string** | Vertical anchor in pixel or you can use `Markers::ANCHOR_TOP`, `Markers::ANCHOR_MIDDLE`, `Markers::ANCHOR_BOTTOM` |
 
 
 #### Return Value:
@@ -119,7 +119,7 @@ Draw markers on the image map.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `image` | **\DantSu\PHPImageEditor\Image** | The map image (An instance of DantSu\PHPImageEditor\Image) |
-| `bbox` | **\DantSu\OpenStreetMapStaticAPI\BoundingBox** | Bounding box of the map |
+| `mapData` | **\DantSu\OpenStreetMapStaticAPI\MapData** | Bounding box of the map |
 
 
 #### Return Value:
@@ -135,4 +135,4 @@ Draw markers on the image map.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-09 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-04-06 using [phpDocumentor](http://www.phpdoc.org/)
