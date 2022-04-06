@@ -189,15 +189,15 @@ class MapData
         );
         $this->latLngTopRight = new LatLng(
             static::tilePxToLat($this->mapCropTopLeft->getY(), $this->tileTopLeft->getY(), $zoom),
-            static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
+            static::tilePxToLng(256 - $this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
         );
         $this->latLngBottomLeft = new LatLng(
-            static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
+            static::tilePxToLat(256 - $this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
             static::tilePxToLng($this->mapCropTopLeft->getX(), $this->tileTopLeft->getX(), $zoom)
         );
         $this->latLngBottomRight = new LatLng(
-            static::tilePxToLat($this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
-            static::tilePxToLng($this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
+            static::tilePxToLat(256 - $this->mapCropBottomRight->getY(), $this->tileBottomRight->getY(), $zoom),
+            static::tilePxToLng(256 - $this->mapCropBottomRight->getX(), $this->tileBottomRight->getX(), $zoom)
         );
     }
 
