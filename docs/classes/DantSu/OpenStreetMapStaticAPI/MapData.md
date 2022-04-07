@@ -19,8 +19,6 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - *(static)* [latToYTile](#lattoytile) 
 - *(static)* [xTileToLng](#xtiletolng) 
 - *(static)* [yTileToLat](#ytiletolat) 
-- *(static)* [tilePxToLat](#tilepxtolat) 
-- *(static)* [tilePxToLng](#tilepxtolng) 
 - [__construct](#-__construct) 
 - [getLatLngTopLeft](#-getlatlngtopleft) 
 - [getLatLngTopRight](#-getlatlngtopright) 
@@ -101,7 +99,8 @@ Convert horizontal OpenStreetMap tile number ad zoom to longitude.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `x` | **int** | Horizontal OpenStreetMap tile id |
+| `id` | **int** | Horizontal OpenStreetMap tile id |
+| `position` | **int** | Horizontal pixel position on tile |
 | `zoom` | **int** | Zoom |
 
 
@@ -127,67 +126,14 @@ Convert vertical OpenStreetMap tile number and zoom to latitude.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `y` | **int** | Vertical OpenStreetMap tile id |
+| `id` | **int** | Vertical OpenStreetMap tile id |
+| `position` | **int** | Vertical pixel position on tile |
 | `zoom` | **int** | Zoom |
 
 
 #### Return Value:
 
  **float** : Latitude of the given OpenStreetMap tile id and zoom
-
-
-
----
-### ::tilePxToLat
-
-Convert pixel position from top of the tile to latitude.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `pxPosition` | **float** | y pixel position from top of the tile |
-| `tile` | **int** | Y tile id |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : latitude
-
-
-
----
-### ::tilePxToLng
-
-Convert pixel position from left of the tile to longitude.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `pxPosition` | **float** | x pixel position from left of the tile |
-| `tile` | **int** | X tile id |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : longitude
 
 
 
