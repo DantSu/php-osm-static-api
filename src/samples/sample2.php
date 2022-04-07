@@ -14,7 +14,7 @@ use \DantSu\OpenStreetMapStaticAPI\Line;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
 
 \header('Content-type: image/png');
-(new OpenStreetMap(new LatLng(44.351933, 2.568113), 6, 2048, 2048))
+(new OpenStreetMap(new LatLng(44.351933, 2.568113), 7, 4096, 4096))
     ->addMarkers(
         (new Markers(__DIR__ . '/resources/marker.png'))
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)

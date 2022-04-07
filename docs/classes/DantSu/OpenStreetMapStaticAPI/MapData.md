@@ -19,8 +19,6 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - *(static)* [latToYTile](#lattoytile) 
 - *(static)* [xTileToLng](#xtiletolng) 
 - *(static)* [yTileToLat](#ytiletolat) 
-- *(static)* [latToTilePx](#lattotilepx) 
-- *(static)* [lngToTilePx](#lngtotilepx) 
 - *(static)* [tilePxToLat](#tilepxtolat) 
 - *(static)* [tilePxToLng](#tilepxtolng) 
 - [__construct](#-__construct) 
@@ -38,7 +36,7 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 
 ### ::lngToXTile
 
-Convert longitude and zoom to horizontal OpenStreetMap tile number.
+Convert longitude and zoom to horizontal OpenStreetMap tile number and pixel position.
 
 
 
@@ -57,14 +55,14 @@ Convert longitude and zoom to horizontal OpenStreetMap tile number.
 
 #### Return Value:
 
- **int** : OpenStreetMap tile id of the given longitude and zoom
+ **int[]** : OpenStreetMap tile id and pixel position of the given longitude and zoom
 
 
 
 ---
 ### ::latToYTile
 
-Convert latitude and zoom to vertical OpenStreetMap tile number.
+Convert latitude and zoom to vertical OpenStreetMap tile number and pixel position.
 
 
 
@@ -83,7 +81,7 @@ Convert latitude and zoom to vertical OpenStreetMap tile number.
 
 #### Return Value:
 
- **int** : OpenStreetMap tile id of the given latitude and zoom
+ **int[]** : OpenStreetMap tile id and pixel position of the given latitude and zoom
 
 
 
@@ -136,58 +134,6 @@ Convert vertical OpenStreetMap tile number and zoom to latitude.
 #### Return Value:
 
  **float** : Latitude of the given OpenStreetMap tile id and zoom
-
-
-
----
-### ::latToTilePx
-
-Convert latitude to pixel position from top of the tile.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `lat` | **float** | latitude |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : pixel position from top of the tile
-
-
-
----
-### ::lngToTilePx
-
-Convert longitude to pixel position from left of the tile.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `lng` | **float** | longitude |
-| `zoom` | **int** | Zoom |
-
-
-#### Return Value:
-
- **float** : pixel position from left of the tile
 
 
 
