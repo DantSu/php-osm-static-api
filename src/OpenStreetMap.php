@@ -15,7 +15,7 @@ use DantSu\PHPImageEditor\Image;
 class OpenStreetMap
 {
     /**
-     * @var MapData Bounding box of the map
+     * @var MapData Data about the generated map (bounding box, size, OSM tile ids...)
      */
     protected $mapData;
     /**
@@ -63,8 +63,9 @@ class OpenStreetMap
     }
 
     /**
-     * Get the bounding box of the map
-     * @return MapData
+     * Get data about the generated map (bounding box, size, OSM tile ids...)
+     * @see https://github.com/DantSu/php-osm-static-api/blob/master/docs/classes/DantSu/OpenStreetMapStaticAPI/MapData.md See more about MapData
+     * @return MapData data about the generated map (bounding box, size, OSM tile ids...)
      */
     public function getMapData(): MapData
     {
@@ -73,7 +74,6 @@ class OpenStreetMap
 
     /**
      * Get only the map image.
-     *
      * @see https://github.com/DantSu/php-image-editor See more about DantSu\PHPImageEditor\Image
      * @return Image An instance of DantSu\PHPImageEditor\Image
      */
@@ -100,10 +100,10 @@ class OpenStreetMap
     }
 
     /**
-     * get attribution text
+     * Get attribution text
      * @return string Attribution text
      */
-    protected function getAttributionText()
+    protected function getAttributionText(): string
     {
         return '© OpenStreetMap contributors';
     }

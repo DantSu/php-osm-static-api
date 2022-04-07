@@ -97,7 +97,7 @@ Add a line on the map
 ---
 ### ->getMapData
 
-Get the bounding box of the map
+Get data about the generated map (bounding box, size, OSM tile ids...)
 
 
 
@@ -109,9 +109,12 @@ Get the bounding box of the map
 
 #### Return Value:
 
- **\DantSu\OpenStreetMapStaticAPI\MapData** : 
+ **\DantSu\OpenStreetMapStaticAPI\MapData** : data about the generated map (bounding box, size, OSM tile ids...)
 
 
+#### See Also:
+
+* https://github.com/DantSu/php-osm-static-api/blob/master/docs/classes/DantSu/OpenStreetMapStaticAPI/MapData.md - See more about MapData
 
 ---
 ### ->getImage
@@ -139,4 +142,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2022-04-06 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-04-07 using [phpDocumentor](http://www.phpdoc.org/)
