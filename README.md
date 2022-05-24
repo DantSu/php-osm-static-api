@@ -27,7 +27,7 @@ Generate OpenStreetMap static image with marker and line :
 ```php
 use \DantSu\OpenStreetMapStaticAPI\OpenStreetMap;
 use \DantSu\OpenStreetMapStaticAPI\LatLng;
-use \DantSu\OpenStreetMapStaticAPI\Line;
+use \DantSu\OpenStreetMapStaticAPI\Polygon;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
 
 \header('Content-type: image/png');
@@ -40,14 +40,13 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
             ->addMarker(new LatLng(44.351873, 2.566250))
     )
     ->addDraw(
-        (new Line('FF0000', 2))
+        (new Polygon('FF0000', 2, 'FF0000DD'))
             ->addPoint(new LatLng(44.351172, 2.571092))
             ->addPoint(new LatLng(44.352097, 2.570045))
             ->addPoint(new LatLng(44.352665, 2.568107))
             ->addPoint(new LatLng(44.352887, 2.566503))
             ->addPoint(new LatLng(44.352806, 2.565972))
             ->addPoint(new LatLng(44.351517, 2.565672))
-            ->addPoint(new LatLng(44.351172, 2.571092))
     )
     ->getImage()
     ->displayPNG();
