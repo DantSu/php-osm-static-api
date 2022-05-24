@@ -53,8 +53,8 @@ class Circle implements Draw
         $this->center = $center;
         $this->edge = $center;
         $this->strokeColor = \str_replace('#', '', $strokeColor);
-        $this->strokeWeight = $strokeWeight;
-        $this->fillColor = $fillColor;
+        $this->strokeWeight = $strokeWeight > 0 ? $strokeWeight : 0;
+        $this->fillColor = \str_replace('#', '', $fillColor);
     }
 
     /**
@@ -100,7 +100,10 @@ class Circle implements Draw
 
         $dImage = Image::newCanvas($image->getWidth(), $image->getHeight());
 
-        $dImage->drawCircle($center->getX(), $center->getY(), $length * 2, $this->strokeColor);
+        if ($this->strokeWeight > 0) {
+            $dImage->drawCircle($center->getX(), $center->getY(), $length * 2, $this->strokeColor);
+        }
+
         $dImage->drawCircle($center->getX(), $center->getY(), ($length - $this->strokeWeight) * 2, $this->fillColor);
 
         $image->pasteOn($dImage, 0, 0);

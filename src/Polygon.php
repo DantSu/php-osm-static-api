@@ -42,8 +42,8 @@ class Polygon implements Draw
     public function __construct(string $strokeColor, int $strokeWeight, string $fillColor)
     {
         $this->strokeColor = \str_replace('#', '', $strokeColor);
-        $this->strokeWeight = $strokeWeight;
-        $this->fillColor = $fillColor;
+        $this->strokeWeight = $strokeWeight > 0 ? $strokeWeight : 0;
+        $this->fillColor = \str_replace('#', '', $fillColor);
     }
 
     /**
@@ -78,30 +78,33 @@ class Polygon implements Draw
             $this->points
         );
 
-        $dImage = Image::newCanvas($image->getWidth(), $image->getHeight());
-
-        $dImage->drawPolygon(
-            \array_reduce(
-                $cPoints,
-                function (array $acc, XY $p) {
-                    $acc[] = $p->getX();
-                    $acc[] = $p->getY();
-                    return $acc;
-                },
-                []
-            ),
-            $this->fillColor
+        $image->pasteOn(
+            Image::newCanvas($image->getWidth(), $image->getHeight())
+                ->drawPolygon(
+                    \array_reduce(
+                        $cPoints,
+                        function (array $acc, XY $p) {
+                            $acc[] = $p->getX();
+                            $acc[] = $p->getY();
+                            return $acc;
+                        },
+                        []
+                    ),
+                    $this->fillColor
+                ),
+            0,
+            0
         );
 
-        foreach ($cPoints as $k => $point) {
-            $pK = $k - 1;
-            if (!isset($cPoints[$pK])) {
-                $pK = \count($cPoints) - 1;
+        if ($this->strokeWeight > 0) {
+            foreach ($cPoints as $k => $point) {
+                $pK = $k - 1;
+                if (!isset($cPoints[$pK])) {
+                    $pK = \count($cPoints) - 1;
+                }
+                $image->drawLine($cPoints[$pK]->getX(), $cPoints[$pK]->getY(), $point->getX(), $point->getY(), $this->strokeWeight, $this->strokeColor);
             }
-            $dImage->drawLine($cPoints[$pK]->getX(), $cPoints[$pK]->getY(), $point->getX(), $point->getY(), $this->strokeWeight, $this->strokeColor);
         }
-
-        $image->pasteOn($dImage, 0, 0);
 
         return $this;
     }
