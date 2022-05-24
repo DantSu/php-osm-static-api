@@ -63,7 +63,7 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 | [Line](./docs/classes/DantSu/OpenStreetMapStaticAPI/Line.md) | DantSu\OpenStreetMapStaticAPI\Line draw line on the map.|
 | [MapData](./docs/classes/DantSu/OpenStreetMapStaticAPI/MapData.md) | DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pixel position.|
 | [Markers](./docs/classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
-| [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers and lines.|
+| [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers, lines, polygons and circles.|
 | [Polygon](./docs/classes/DantSu/OpenStreetMapStaticAPI/Polygon.md) | DantSu\OpenStreetMapStaticAPI\Polygon draw polygon on the map.|
 | [XY](./docs/classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
 

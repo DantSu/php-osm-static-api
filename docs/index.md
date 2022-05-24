@@ -18,7 +18,7 @@ This is an automatically generated documentation for **PHP OpenStreetMap Static 
 | [Line](./classes/DantSu/OpenStreetMapStaticAPI/Line.md) | DantSu\OpenStreetMapStaticAPI\Line draw line on the map.|
 | [MapData](./classes/DantSu/OpenStreetMapStaticAPI/MapData.md) | DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pixel position.|
 | [Markers](./classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
-| [OpenStreetMap](./classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers and lines.|
+| [OpenStreetMap](./classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers, lines, polygons and circles.|
 | [Polygon](./classes/DantSu/OpenStreetMapStaticAPI/Polygon.md) | DantSu\OpenStreetMapStaticAPI\Polygon draw polygon on the map.|
 | [XY](./classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
 
