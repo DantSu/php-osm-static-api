@@ -17,7 +17,7 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 
 - [__construct](#-__construct) 
 - [addMarkers](#-addmarkers) 
-- [addLine](#-addline) 
+- [addDraw](#-adddraw) 
 - [getMapData](#-getmapdata) 
 - [getImage](#-getimage) 
 
@@ -70,7 +70,7 @@ Add markers on the map
 
 
 ---
-### ->addLine
+### ->addDraw
 
 Add a line on the map
 
@@ -85,7 +85,7 @@ Add a line on the map
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `line` | **\DantSu\OpenStreetMapStaticAPI\Line** | An instance of Line |
+| `draw` | **\DantSu\OpenStreetMapStaticAPI\Interfaces\Draw** | An instance of Line |
 
 
 #### Return Value:
@@ -142,4 +142,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2022-04-07 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)

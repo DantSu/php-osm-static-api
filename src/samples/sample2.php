@@ -34,52 +34,52 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
             ->addMarker(new LatLng(28.119083, -15.438387))
             ->addMarker(new LatLng(57.704334, 11.963886))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(48.858535, 2.294107))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(52.516304, 13.378107))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(40.415176, -3.707362))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(51.500845, -0.124591))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(41.890145, 12.492552))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(36.809764, 10.134114))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(31.621758, -7.981512))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(47.500469, 19.054086))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(28.119083, -15.438387))
     )
-    ->addLine(
+    ->addDraw(
         (new Line('FF0000', 1))
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(57.704334, 11.963886))

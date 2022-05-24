@@ -1,11 +1,11 @@
 
-# Line
+# Polygon
 
-DantSu\OpenStreetMapStaticAPI\Line draw line on the map.
+DantSu\OpenStreetMapStaticAPI\Polygon draw polygon on the map.
 
 
 
-* Full name: `\DantSu\OpenStreetMapStaticAPI\Line`
+* Full name: `\DantSu\OpenStreetMapStaticAPI\Polygon`
 * This class implements: \DantSu\OpenStreetMapStaticAPI\Interfaces\Draw
 
 **See Also:**
@@ -22,7 +22,7 @@ DantSu\OpenStreetMapStaticAPI\Line draw line on the map.
 
 ### ->__construct
 
-Line constructor.
+Polygon constructor.
 
 
 
@@ -35,8 +35,9 @@ Line constructor.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `color` | **string** | Hexadecimal string color |
-| `weight` | **int** | pixel weight of the line |
+| `strokeColor` | **string** | Hexadecimal string color |
+| `strokeWeight` | **int** | pixel weight of the line |
+| `fillColor` | **string** | Hexadecimal string color |
 
 
 
@@ -44,7 +45,7 @@ Line constructor.
 ---
 ### ->addPoint
 
-Add a latitude and longitude to the multi-points line
+Add a latitude and longitude to the polygon
 
 
 
@@ -69,7 +70,7 @@ Add a latitude and longitude to the multi-points line
 ---
 ### ->draw
 
-Draw the line on the map image.
+Draw the polygon on the map image.
 
 
 

@@ -23,7 +23,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "dantsu/php-image-editor": "^1.0"
+    "dantsu/php-image-editor": "^1.1"
   },
   "autoload": {
     "psr-4": {

@@ -2,6 +2,7 @@
 
 namespace DantSu\OpenStreetMapStaticAPI;
 
+use DantSu\OpenStreetMapStaticAPI\Interfaces\Draw;
 use DantSu\PHPImageEditor\Image;
 
 /**
@@ -23,9 +24,9 @@ class OpenStreetMap
      */
     protected $markers = [];
     /**
-     * @var Line[] Array of Line instances
+     * @var Draw[] Array of Line instances
      */
-    protected $lines = [];
+    protected $draws = [];
 
 
     /**
@@ -53,12 +54,12 @@ class OpenStreetMap
 
     /**
      * Add a line on the map
-     * @param Line $line An instance of Line
+     * @param Draw $draw An instance of Line
      * @return $this Fluent interface
      */
-    public function addLine(Line $line)
+    public function addDraw(Draw $draw)
     {
-        $this->lines[] = $line;
+        $this->draws[] = $draw;
         return $this;
     }
 
@@ -147,7 +148,7 @@ class OpenStreetMap
     {
         $image = $this->getMapImage();
 
-        foreach ($this->lines as $line) {
+        foreach ($this->draws as $line) {
             $line->draw($image, $this->mapData);
         }
 

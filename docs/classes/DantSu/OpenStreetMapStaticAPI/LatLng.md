@@ -82,4 +82,4 @@ Get longitude
 
 
 ---
-> Automatically generated from source code comments on 2022-04-07 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)

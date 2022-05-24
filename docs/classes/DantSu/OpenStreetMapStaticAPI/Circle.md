@@ -1,11 +1,11 @@
 
-# Line
+# Circle
 
-DantSu\OpenStreetMapStaticAPI\Line draw line on the map.
+DantSu\OpenStreetMapStaticAPI\Circle draw circle on the map.
 
 
 
-* Full name: `\DantSu\OpenStreetMapStaticAPI\Line`
+* Full name: `\DantSu\OpenStreetMapStaticAPI\Circle`
 * This class implements: \DantSu\OpenStreetMapStaticAPI\Interfaces\Draw
 
 **See Also:**
@@ -17,12 +17,13 @@ DantSu\OpenStreetMapStaticAPI\Line draw line on the map.
 ## Methods
 
 - [__construct](#-__construct) 
-- [addPoint](#-addpoint) 
+- [setEdgePoint](#-setedgepoint) 
+- [setRadius](#-setradius) 
 - [draw](#-draw) 
 
 ### ->__construct
 
-Line constructor.
+Circle constructor.
 
 
 
@@ -35,16 +36,18 @@ Line constructor.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `color` | **string** | Hexadecimal string color |
-| `weight` | **int** | pixel weight of the line |
+| `center` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the circle center |
+| `strokeColor` | **string** | Hexadecimal string color |
+| `strokeWeight` | **int** | pixel weight of the line |
+| `fillColor` | **string** | Hexadecimal string color |
 
 
 
 
 ---
-### ->addPoint
+### ->setEdgePoint
 
-Add a latitude and longitude to the multi-points line
+Set a latitude and longitude to define the radius of the circle.
 
 
 
@@ -57,7 +60,32 @@ Add a latitude and longitude to the multi-points line
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `latLng` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude to add |
+| `edge` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the edge point of a circle |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->setRadius
+
+Set the radius of the circle in meters.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `radius` | **float** | radius of a circle in meters |
 
 
 #### Return Value:
@@ -69,7 +97,7 @@ Add a latitude and longitude to the multi-points line
 ---
 ### ->draw
 
-Draw the line on the map image.
+Draw the circle on the map image.
 
 
 

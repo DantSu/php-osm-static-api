@@ -2,6 +2,7 @@
 
 namespace DantSu\OpenStreetMapStaticAPI;
 
+use DantSu\OpenStreetMapStaticAPI\Interfaces\Draw;
 use DantSu\PHPImageEditor\Image;
 
 /**
@@ -12,7 +13,7 @@ use DantSu\PHPImageEditor\Image;
  * @access public
  * @see https://github.com/DantSu/php-osm-static-api Github page of this project
  */
-class Line
+class Line implements Draw
 {
     /**
      * @var string
