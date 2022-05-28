@@ -16,6 +16,10 @@ use DantSu\PHPImageEditor\Image;
 class OpenStreetMap
 {
     /**
+     * @var TileServer Tile server settings, defaults to OpenStreetMaps tile server
+     */
+    protected $tileServer;
+    /**
      * @var MapData Data about the generated map (bounding box, size, OSM tile ids...)
      */
     protected $mapData;
@@ -28,17 +32,18 @@ class OpenStreetMap
      */
     protected $draws = [];
 
-
     /**
      * OpenStreetMap constructor.
      * @param LatLng $centerMap Latitude and longitude of the map center
      * @param int $zoom Zoom
      * @param int $imageWidth Width of the generated map image
      * @param int $imageHeight Height of the generated map image
+     * @param TileServer $tileServer Tile server configuration, defaults to OpenStreetMaps tile server
      */
-    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight)
+    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileServer $tileServer = null)
     {
         $this->mapData = new MapData($centerMap, $zoom, new XY($imageWidth, $imageHeight));
+        $this->tileServer = is_null($tileServer) ? TileServer::defaultTileServer() : $tileServer;
     }
 
     /**
@@ -90,7 +95,7 @@ class OpenStreetMap
         for ($y = $startY; $y < $imgSize->getY(); $y += 256) {
             $xTile = $this->mapData->getTileTopLeft()->getX();
             for ($x = $startX; $x < $imgSize->getX(); $x += 256) {
-                $i = Image::fromCurl('https://tile.openstreetmap.org/' . $this->mapData->getZoom() . '/' . $xTile . '/' . $yTile . '.png');
+                $i = Image::fromCurl($this->tileServer->getTileUrl($xTile, $yTile, $this->mapData->getZoom()));
                 $image->pasteOn($i, $x, $y);
                 ++$xTile;
             }
@@ -98,15 +103,6 @@ class OpenStreetMap
         }
 
         return $image;
-    }
-
-    /**
-     * Get attribution text
-     * @return string Attribution text
-     */
-    protected function getAttributionText(): string
-    {
-        return '© OpenStreetMap contributors';
     }
 
     /**
@@ -119,7 +115,7 @@ class OpenStreetMap
         $margin = 5;
         $attribution = function (Image $image, $margin): array {
             return $image->writeTextAndGetBoundingBox(
-                $this->getAttributionText(),
+                $this->tileServer->getAttributionText(),
                 __DIR__ . '/resources/font.ttf',
                 10,
                 '0078A8',
