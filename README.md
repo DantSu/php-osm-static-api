@@ -65,6 +65,7 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 | [Markers](./docs/classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
 | [OpenStreetMap](./docs/classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers, lines, polygons and circles.|
 | [Polygon](./docs/classes/DantSu/OpenStreetMapStaticAPI/Polygon.md) | DantSu\OpenStreetMapStaticAPI\Polygon draw polygon on the map.|
+| [TileLayer](./docs/classes/DantSu/OpenStreetMapStaticAPI/TileLayer.md) | DantSu\OpenStreetMapStaticAPI\TileLayer define tile server url and related configuration|
 | [XY](./docs/classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
 
 
