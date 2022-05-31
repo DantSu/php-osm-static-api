@@ -16,6 +16,7 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 ## Methods
 
 - [__construct](#-__construct) 
+- [addLayer](#-addlayer) 
 - [addMarkers](#-addmarkers) 
 - [addDraw](#-adddraw) 
 - [getMapData](#-getmapdata) 
@@ -40,7 +41,33 @@ OpenStreetMap constructor.
 | `zoom` | **int** | Zoom |
 | `imageWidth` | **int** | Width of the generated map image |
 | `imageHeight` | **int** | Height of the generated map image |
+| `tileServer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | Tile server configuration, defaults to OpenStreetMaps tile server |
 
+
+
+
+---
+### ->addLayer
+
+Add tile layer to the map
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `layer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | An instance of TileLayer |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
 
 
 
@@ -142,4 +169,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-31 using [phpDocumentor](http://www.phpdoc.org/)

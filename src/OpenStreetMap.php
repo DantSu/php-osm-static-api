@@ -16,13 +16,13 @@ use DantSu\PHPImageEditor\Image;
 class OpenStreetMap
 {
     /**
-     * @var TileServer Tile server settings, defaults to OpenStreetMaps tile server
-     */
-    protected $tileServer;
-    /**
      * @var MapData Data about the generated map (bounding box, size, OSM tile ids...)
      */
     protected $mapData;
+    /**
+     * @var TileLayer[] Array of TileLayer instances
+     */
+    protected $layers = [];
     /**
      * @var Markers[] Array of Markers instances
      */
@@ -38,12 +38,23 @@ class OpenStreetMap
      * @param int $zoom Zoom
      * @param int $imageWidth Width of the generated map image
      * @param int $imageHeight Height of the generated map image
-     * @param TileServer $tileServer Tile server configuration, defaults to OpenStreetMaps tile server
+     * @param TileLayer $tileServer Tile server configuration, defaults to OpenStreetMaps tile server
      */
-    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileServer $tileServer = null)
+    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileLayer $tileServer = null)
     {
         $this->mapData = new MapData($centerMap, $zoom, new XY($imageWidth, $imageHeight));
-        $this->tileServer = is_null($tileServer) ? TileServer::defaultTileServer() : $tileServer;
+        $this->layers = [$tileServer === null ? TileLayer::defaultTileLayer() : $tileServer];
+    }
+
+    /**
+     * Add tile layer to the map
+     * @param TileLayer $layer An instance of TileLayer
+     * @return $this Fluent interface
+     */
+    public function addLayer(TileLayer $layer)
+    {
+        $this->layers[] = $layer;
+        return $this;
     }
 
     /**
@@ -88,20 +99,24 @@ class OpenStreetMap
         $imgSize = $this->mapData->getOutputSize();
         $startX = $this->mapData->getMapCropTopLeft()->getX() * -1;
         $startY = $this->mapData->getMapCropTopLeft()->getY() * -1;
-        $yTile = $this->mapData->getTileTopLeft()->getY();
 
         $image = Image::newCanvas($imgSize->getX(), $imgSize->getY());
 
-        for ($y = $startY; $y < $imgSize->getY(); $y += 256) {
-            $xTile = $this->mapData->getTileTopLeft()->getX();
-            for ($x = $startX; $x < $imgSize->getX(); $x += 256) {
-                $i = Image::fromCurl($this->tileServer->getTileUrl($xTile, $yTile, $this->mapData->getZoom()));
-                $image->pasteOn($i, $x, $y);
-                ++$xTile;
+        foreach ($this->layers as $tileLayer) {
+            $yTile = $this->mapData->getTileTopLeft()->getY();
+            for ($y = $startY; $y < $imgSize->getY(); $y += 256) {
+                $xTile = $this->mapData->getTileTopLeft()->getX();
+                for ($x = $startX; $x < $imgSize->getX(); $x += 256) {
+                    $image->pasteOn(
+                        $tileLayer->getTile($xTile, $yTile, $this->mapData->getZoom()),
+                        $x,
+                        $y
+                    );
+                    ++$xTile;
+                }
+                ++$yTile;
             }
-            ++$yTile;
         }
-
         return $image;
     }
 
@@ -115,7 +130,12 @@ class OpenStreetMap
         $margin = 5;
         $attribution = function (Image $image, $margin): array {
             return $image->writeTextAndGetBoundingBox(
-                $this->tileServer->getAttributionText(),
+                \implode(
+                    ' - ',
+                    \array_map(function ($layer) {
+                        return $layer->getAttributionText();
+                    }, $this->layers)
+                ),
                 __DIR__ . '/resources/font.ttf',
                 10,
                 '0078A8',

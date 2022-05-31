@@ -6,18 +6,32 @@ require_once '../LatLng.php';
 require_once '../Polygon.php';
 require_once '../Markers.php';
 require_once '../OpenStreetMap.php';
+require_once '../TileLayer.php';
 require_once '../XY.php';
 
 use \DantSu\OpenStreetMapStaticAPI\OpenStreetMap;
 use \DantSu\OpenStreetMapStaticAPI\LatLng;
 use \DantSu\OpenStreetMapStaticAPI\Polygon;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
-use DantSu\OpenStreetMapStaticAPI\TileServer;
+use \DantSu\OpenStreetMapStaticAPI\TileLayer;
 
 \header('Content-type: image/png');
-$tileServer = new TileServer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png',
-    'Map tiles by Stamen Design, CC BY 3.0 - © OpenStreetMap contributors');
-(new OpenStreetMap(new LatLng(44.351933, 2.568113), 17, 600, 400, $tileServer))
+
+$tileLayer1 = (new TileLayer(
+    'https://khms{s}.google.com/kh/v=925?x={x}&y={y}&z={z}',
+    'Images ©2022 Maxar Technologies',
+    '0123'
+));
+
+// https://stackoverflow.com/a/29712049
+$tileLayer2 = (new TileLayer(
+    'https://mts{s}.google.com/vt/lyrs=h&x={x}&y={y}&z={z}&apistyle=s.t%3A2|p.v%3Aoff',
+    '©GoogleMaps',
+    '0123'
+))->setOpacity(0.8);
+
+(new OpenStreetMap(new LatLng(44.351933, 2.568113), 17, 600, 400, $tileLayer1))
+    ->addLayer($tileLayer2)
     ->addMarkers(
         (new Markers(__DIR__ . '/resources/marker.png'))
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)

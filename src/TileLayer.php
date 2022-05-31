@@ -2,33 +2,50 @@
 
 namespace DantSu\OpenStreetMapStaticAPI;
 
+use DantSu\PHPImageEditor\Image;
+
 /**
- * DantSu\OpenStreetMapStaticAPI\TileServer define tile server url and related configuration
+ * DantSu\OpenStreetMapStaticAPI\TileLayer define tile server url and related configuration
  *
  * @package DantSu\OpenStreetMapStaticAPI
  * @author Stephan Strate <hello@stephan.codes>
  * @access public
  * @see https://github.com/DantSu/php-osm-static-api Github page of this project
  */
-class TileServer
+class TileLayer
 {
+
+    /**
+     * Default tile server. OpenStreetMaps with related attribution text
+     * @return TileLayer default tile server
+     */
+    public static function defaultTileLayer(): TileLayer
+    {
+        return new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap contributors');
+    }
+
     /**
      * @var string Tile server url, defaults to OpenStreetMap tile server
      */
-    private $url;
+    protected $url;
 
     /**
      * @var string Tile server attribution according to license
      */
-    private $attributionText;
+    protected $attributionText;
 
     /**
      * @var string[] Tile server subdomains
      */
-    private $subdomains;
+    protected $subdomains;
 
     /**
-     * TileServer constructor
+     * @var float Opacity
+     */
+    protected $opacity = 1;
+
+    /**
+     * TileLayer constructor
      * @param string $url tile server url with placeholders (`x`, `y`, `z`, `r`, `s`)
      * @param string $attributionText tile server attribution text
      * @param string $subdomains tile server subdomains
@@ -37,7 +54,18 @@ class TileServer
     {
         $this->url = $url;
         $this->attributionText = $attributionText;
-        $this->subdomains = str_split($subdomains);
+        $this->subdomains = \str_split($subdomains);
+    }
+
+    /**
+     * Set opacity of the layer
+     * @param float $opacity Opacity value (0 to 1)
+     * @return $this Fluent interface
+     */
+    public function setOpacity(float $opacity)
+    {
+        $this->opacity = $opacity;
+        return $this;
     }
 
     /**
@@ -49,9 +77,11 @@ class TileServer
      */
     public function getTileUrl(int $x, int $y, int $z): string
     {
-        $patterns = ['r', 's', 'x', 'y', 'z'];
-        $replacements = ['', $this->getSubdomain($x, $y), $x, $y, $z];
-        return preg_replace(array_map(function ($character) { return "/\\$?\{$character}/"; }, $patterns), $replacements, $this->url);
+        return \str_replace(
+            ['{r}', '{s}', '{x}', '{y}', '{z}'],
+            ['', $this->getSubdomain($x, $y), $x, $y, $z],
+            $this->url
+        );
     }
 
     /**
@@ -63,8 +93,7 @@ class TileServer
      */
     protected function getSubdomain(int $x, int $y): string
     {
-        $index = abs($x + $y) % sizeof($this->subdomains);
-        return $this->subdomains[$index];
+        return $this->subdomains[\abs($x + $y) % \sizeof($this->subdomains)];
     }
 
     /**
@@ -77,11 +106,21 @@ class TileServer
     }
 
     /**
-     * Default tile server. OpenStreetMaps with related attribution text
-     * @return TileServer default tile server
+     * Get an image tile
+     * @return Image Image instance containing the tile
      */
-    public static function defaultTileServer(): TileServer
+    public function getTile(float $x, float $y, int $z): Image
     {
-        return new TileServer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap contributors');
+        if($this->opacity == 0) {
+            return Image::newCanvas(256, 256);
+        }
+
+        $tile = Image::fromCurl($this->getTileUrl($x, $y, $z));
+
+        if($this->opacity > 0 && $this->opacity < 1) {
+            $tile->setOpacity($this->opacity);
+        }
+
+        return $tile;
     }
 }

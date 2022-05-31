@@ -20,6 +20,7 @@ This is an automatically generated documentation for **PHP OpenStreetMap Static 
 | [Markers](./classes/DantSu/OpenStreetMapStaticAPI/Markers.md) | DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.|
 | [OpenStreetMap](./classes/DantSu/OpenStreetMapStaticAPI/OpenStreetMap.md) | DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily get static image from OpenStreetMap with markers, lines, polygons and circles.|
 | [Polygon](./classes/DantSu/OpenStreetMapStaticAPI/Polygon.md) | DantSu\OpenStreetMapStaticAPI\Polygon draw polygon on the map.|
+| [TileLayer](./classes/DantSu/OpenStreetMapStaticAPI/TileLayer.md) | DantSu\OpenStreetMapStaticAPI\TileLayer define tile server url and related configuration|
 | [XY](./classes/DantSu/OpenStreetMapStaticAPI/XY.md) | DantSu\OpenStreetMapStaticAPI\XY define X and Y pixel position for map, lines, markers.|
 
 
@@ -50,4 +51,4 @@ This is an automatically generated documentation for **PHP OpenStreetMap Static 
 
 
 ---
-> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-31 using [phpDocumentor](http://www.phpdoc.org/)
