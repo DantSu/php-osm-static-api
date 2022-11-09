@@ -45,16 +45,30 @@ class TileLayer
     protected $opacity = 1;
 
     /**
+     * @array $curlOptions Array of curl options
+     */
+    protected $curlOptions = [];
+
+    /**
+     * @bool $failCurlOnError If true, curl will throw an exception on error.
+     */
+    protected $failCurlOnError = false;
+
+    /**
      * TileLayer constructor
      * @param string $url tile server url with placeholders (`x`, `y`, `z`, `r`, `s`)
      * @param string $attributionText tile server attribution text
      * @param string $subdomains tile server subdomains
+     * @param array $curlOptions Array of curl options
+     * @param bool $failCurlOnError If true, curl will throw an exception on error.
      */
-    public function __construct(string $url, string $attributionText, string $subdomains = 'abc')
+    public function __construct(string $url, string $attributionText, string $subdomains = 'abc', array $curlOptions = [], bool $failCurlOnError = false)
     {
         $this->url = $url;
         $this->attributionText = $attributionText;
         $this->subdomains = \str_split($subdomains);
+        $this->curlOptions = $curlOptions;
+        $this->failCurlOnError = $failCurlOnError;
     }
 
     /**
@@ -115,7 +129,7 @@ class TileLayer
             return Image::newCanvas(256, 256);
         }
 
-        $tile = Image::fromCurl($this->getTileUrl($x, $y, $z));
+        $tile = Image::fromCurl($this->getTileUrl($x, $y, $z),$this->curlOptions, $this->failCurlOnError);
 
         if($this->opacity > 0 && $this->opacity < 1) {
             $tile->setOpacity($this->opacity);
