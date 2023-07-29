@@ -44,6 +44,17 @@ class TileLayer
      */
     protected $opacity = 1;
 
+    /*
+     * @var int Max zoom value
+     */
+    protected $maxZoom = 20;
+
+    /*
+     * @var int Min zoom value
+     */
+    protected $minZoom = 0;
+
+
     /**
      * TileLayer constructor
      * @param string $url tile server url with placeholders (`x`, `y`, `z`, `r`, `s`)
@@ -66,6 +77,56 @@ class TileLayer
     {
         $this->opacity = $opacity;
         return $this;
+    }
+
+    /**
+     * Set a max zoom value
+     * @param int $maxZoom
+     * @return $this Fluent interface
+     */
+    public function setMaxZoom(int $maxZoom)
+    {
+        $this->maxZoom = $maxZoom;
+        return $this;
+    }
+
+    /**
+     * Get max zoom value
+     * @return int
+     */
+    public function getMaxZoom(): int
+    {
+        return $this->maxZoom;
+    }
+
+    /**
+     * Set a min zoom value
+     * @param int $minZoom
+     * @return $this Fluent interface
+     */
+    public function setMinZoom(int $minZoom)
+    {
+        $this->minZoom = $minZoom;
+        return $this;
+    }
+
+    /**
+     * Get min zoom value
+     * @return int
+     */
+    public function getMinZoom(): int
+    {
+        return $this->minZoom;
+    }
+
+    /**
+     * Check if zoom value is between min zoom and max zoom
+     * @param int $zoom Zoom value to be checked
+     * @return int
+     */
+    public function checkZoom(int $zoom): int
+    {
+        return \min(\max($zoom, $this->minZoom), $this->maxZoom);
     }
 
     /**
@@ -107,12 +168,17 @@ class TileLayer
 
     /**
      * Get an image tile
+     * @param float $x
+     * @param float $y
+     * @param int $z
+     * @param int $tileSize
      * @return Image Image instance containing the tile
+     * @throws \Exception
      */
-    public function getTile(float $x, float $y, int $z): Image
+    public function getTile(float $x, float $y, int $z, int $tileSize): Image
     {
         if($this->opacity == 0) {
-            return Image::newCanvas(256, 256);
+            return Image::newCanvas($tileSize, $tileSize);
         }
 
         $tile = Image::fromCurl($this->getTileUrl($x, $y, $z));

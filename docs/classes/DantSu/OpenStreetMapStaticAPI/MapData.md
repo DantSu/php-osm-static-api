@@ -19,6 +19,7 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - *(static)* [latToYTile](#lattoytile) 
 - *(static)* [xTileToLng](#xtiletolng) 
 - *(static)* [yTileToLat](#ytiletolat) 
+- *(static)* [getCenter](#getcenter) 
 - [__construct](#-__construct) 
 - [getLatLngTopLeft](#-getlatlngtopleft) 
 - [getLatLngTopRight](#-getlatlngtopright) 
@@ -26,6 +27,7 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - [getLatLngBottomRight](#-getlatlngbottomright) 
 - [getOutputSize](#-getoutputsize) 
 - [getZoom](#-getzoom) 
+- [getTileSize](#-gettilesize) 
 - [getTileTopLeft](#-gettiletopleft) 
 - [getTileBottomRight](#-gettilebottomright) 
 - [getMapCropTopLeft](#-getmapcroptopleft) 
@@ -49,6 +51,7 @@ Convert longitude and zoom to horizontal OpenStreetMap tile number and pixel pos
 |-----------|------|-------------|
 | `lon` | **float** | Longitude |
 | `zoom` | **int** | Zoom |
+| `tileSize` | **int** | Tile size |
 
 
 #### Return Value:
@@ -75,6 +78,7 @@ Convert latitude and zoom to vertical OpenStreetMap tile number and pixel positi
 |-----------|------|-------------|
 | `lat` | **float** | Latitude |
 | `zoom` | **int** | Zoom |
+| `tileSize` | **int** | Tile size |
 
 
 #### Return Value:
@@ -102,6 +106,7 @@ Convert horizontal OpenStreetMap tile number ad zoom to longitude.
 | `id` | **int** | Horizontal OpenStreetMap tile id |
 | `position` | **int** | Horizontal pixel position on tile |
 | `zoom` | **int** | Zoom |
+| `tileSize` | **int** | Tile size |
 
 
 #### Return Value:
@@ -129,11 +134,38 @@ Convert vertical OpenStreetMap tile number and zoom to latitude.
 | `id` | **int** | Vertical OpenStreetMap tile id |
 | `position` | **int** | Vertical pixel position on tile |
 | `zoom` | **int** | Zoom |
+| `tileSize` | **int** | Tile size |
 
 
 #### Return Value:
 
  **float** : Latitude of the given OpenStreetMap tile id and zoom
+
+
+
+---
+### ::getCenter
+
+Get center between two coordinates.
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `point1` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical OpenStreetMap tile id |
+| `point2` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical pixel position on tile |
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng** : midpoint between the given coordinates
 
 
 
@@ -156,6 +188,7 @@ Convert vertical OpenStreetMap tile number and zoom to latitude.
 | `centerMap` | **\DantSu\OpenStreetMapStaticAPI\LatLng** |  |
 | `zoom` | **int** |  |
 | `outputSize` | **\DantSu\OpenStreetMapStaticAPI\XY** |  |
+| `tileSize` | **int** |  |
 
 
 
@@ -275,6 +308,25 @@ Get the zoom
 
 
 ---
+### ->getTileSize
+
+Get tile size
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **int** : tile size
+
+
+
+---
 ### ->getTileTopLeft
 
 Get top left tile numbers
@@ -379,4 +431,4 @@ Convert a latitude and longitude to a XY pixel position in the image
 
 
 ---
-> Automatically generated from source code comments on 2022-05-31 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2023-07-30 using [phpDocumentor](http://www.phpdoc.org/)

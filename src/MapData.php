@@ -13,20 +13,20 @@ namespace DantSu\OpenStreetMapStaticAPI;
  */
 class MapData
 {
-
     /**
      * Convert longitude and zoom to horizontal OpenStreetMap tile number and pixel position.
      * @param float $lon Longitude
      * @param int $zoom Zoom
+     * @param int $tileSize Tile size
      * @return int[] OpenStreetMap tile id and pixel position of the given longitude and zoom
      */
-    public static function lngToXTile(float $lon, int $zoom): array
+    public static function lngToXTile(float $lon, int $zoom, int $tileSize): array
     {
         $x = ($lon + 180) / 360 * \pow(2, $zoom);
         $tile = \floor($x);
         return [
             'id' => $tile,
-            'position' => \round(256 * ($x - $tile))
+            'position' => \round($tileSize * ($x - $tile))
         ];
     }
 
@@ -34,15 +34,16 @@ class MapData
      * Convert latitude and zoom to vertical OpenStreetMap tile number and pixel position.
      * @param float $lat Latitude
      * @param int $zoom Zoom
+     * @param int $tileSize Tile size
      * @return int[] OpenStreetMap tile id and pixel position of the given latitude and zoom
      */
-    public static function latToYTile(float $lat, int $zoom): array
+    public static function latToYTile(float $lat, int $zoom, int $tileSize): array
     {
         $y = (1 - \log(\tan(\deg2rad($lat)) + 1 / \cos(\deg2rad($lat))) / M_PI) / 2 * \pow(2, $zoom);
         $tile = \floor($y);
         return [
             'id' => $tile,
-            'position' => \round(256 * ($y - $tile))
+            'position' => \round($tileSize * ($y - $tile))
         ];
     }
 
@@ -51,11 +52,12 @@ class MapData
      * @param int $id Horizontal OpenStreetMap tile id
      * @param int $position Horizontal pixel position on tile
      * @param int $zoom Zoom
+     * @param int $tileSize Tile size
      * @return float Longitude of the given OpenStreetMap tile id and zoom
      */
-    public static function xTileToLng(int $id, int $position, int $zoom): float
+    public static function xTileToLng(int $id, int $position, int $zoom, int $tileSize): float
     {
-        return ($id + $position / 256) / \pow(2, $zoom) * 360 - 180;
+        return ($id + $position / $tileSize) / \pow(2, $zoom) * 360 - 180;
     }
 
     /**
@@ -63,44 +65,43 @@ class MapData
      * @param int $id Vertical OpenStreetMap tile id
      * @param int $position Vertical pixel position on tile
      * @param int $zoom Zoom
+     * @param int $tileSize Tile size
      * @return float Latitude of the given OpenStreetMap tile id and zoom
      */
-    public static function yTileToLat(int $id, int $position, int $zoom): float
+    public static function yTileToLat(int $id, int $position, int $zoom, int $tileSize): float
     {
-        return \rad2deg(\atan(\sinh(M_PI * (1 - 2 * ($id + $position / 256) / \pow(2, $zoom)))));
+        return \rad2deg(\atan(\sinh(M_PI * (1 - 2 * ($id + $position / $tileSize) / \pow(2, $zoom)))));
     }
 
-
     /**
-     * Convert pixel position from top of the tile to latitude.
-     * @param float $pxPosition y pixel position from top of the tile
-     * @param int $tile Y tile id
-     * @param int $zoom Zoom
-     * @return float latitude
+     * Get center between two coordinates.
+     * @param LatLng $point1 Vertical OpenStreetMap tile id
+     * @param LatLng $point2 Vertical pixel position on tile
+     * @return LatLng midpoint between the given coordinates
      */
-    /*public static function tilePxToLat(float $pxPosition, int $tile, int $zoom): float
+    public static function getCenter(LatLng $point1, LatLng $point2): LatLng
     {
-        $tileLat = static::yTileToLat($tile, $zoom);
-        return $tileLat - \abs(($tileLat - static::yTileToLat($tile + 1, $zoom)) * $pxPosition / 256);
-    }*/
+        $dLng = \deg2rad($point2->getLng() - $point1->getLng());
+        $lat1 = \deg2rad($point1->getLat());
+        $lat2 = \deg2rad($point2->getLat());
+        $lng1 = \deg2rad($point1->getLng());
+        $bx = \cos($lat2) * \cos($dLng);
+        $by = \cos($lat2) * \sin($dLng);
+        return new LatLng(
+            \rad2deg(\atan2(\sin($lat1) + \sin($lat2), \sqrt((\cos($lat1) + $bx) * (\cos($lat1) + $bx) + $by * $by))),
+            \rad2deg($lng1 + \atan2($by, \cos($lat1) + $bx))
+        );
+    }
 
-    /**
-     * Convert pixel position from left of the tile to longitude.
-     * @param float $pxPosition x pixel position from left of the tile
-     * @param int $tile X tile id
-     * @param int $zoom Zoom
-     * @return float longitude
-     */
-    /*public static function tilePxToLng(float $pxPosition, int $tile, int $zoom): float
-    {
-        $tileLng = static::xTileToLng($tile, $zoom);
-        return $tileLng + \abs(($tileLng - static::xTileToLng($tile + 1, $zoom)) * $pxPosition / 256);
-    }*/
 
     /**
      * @var int zoom
      */
     private $zoom;
+    /**
+     * @var int tile size
+     */
+    private $tileSize;
     /**
      * @var XY Width and height of the image in pixel
      */
@@ -138,13 +139,21 @@ class MapData
      */
     private $latLngBottomRight;
 
-    public function __construct(LatLng $centerMap, int $zoom, XY $outputSize)
+
+    /**
+     * @param LatLng $centerMap
+     * @param int $zoom
+     * @param XY $outputSize
+     * @param int $tileSize
+     */
+    public function __construct(LatLng $centerMap, int $zoom, XY $outputSize, int $tileSize)
     {
         $this->zoom = $zoom;
         $this->outputSize = $outputSize;
+        $this->tileSize = $tileSize;
 
-        $x = static::lngToXTile($centerMap->getLng(), $zoom);
-        $y = static::latToYTile($centerMap->getLat(), $zoom);
+        $x = static::lngToXTile($centerMap->getLng(), $zoom, $this->tileSize);
+        $y = static::latToYTile($centerMap->getLat(), $zoom, $this->tileSize);
 
         $startX = \floor($outputSize->getX() / 2 - $x['position']);
         $startY = \floor($outputSize->getY() / 2 - $y['position']);
@@ -154,40 +163,39 @@ class MapData
         $bottomSize = $outputSize->getY() - $startY;
 
         $this->mapCropTopLeft = new XY(
-            $startX < 0 ? \abs($startX) : ($startX % 256 == 0 ? 0 : 256 - $startX % 256),
-            $startY < 0 ? \abs($startY) : ($startY % 256 == 0 ? 0 : 256 - $startY % 256)
+            $startX < 0 ? \abs($startX) : ($startX % $this->tileSize == 0 ? 0 : $this->tileSize - $startX % $this->tileSize),
+            $startY < 0 ? \abs($startY) : ($startY % $this->tileSize == 0 ? 0 : $this->tileSize - $startY % $this->tileSize)
         );
         $this->mapCropBottomRight = new XY(
-            ($rightSize % 256 == 0 ? 0 : 256 - $rightSize % 256),
-            ($bottomSize % 256 == 0 ? 0 : 256 - $bottomSize % 256)
+            ($rightSize % $this->tileSize == 0 ? 0 : $this->tileSize - $rightSize % $this->tileSize),
+            ($bottomSize % $this->tileSize == 0 ? 0 : $this->tileSize - $bottomSize % $this->tileSize)
         );
         $this->tileTopLeft = new XY(
-            $x['id'] - \ceil($startX / 256),
-            $y['id'] - \ceil($startY / 256)
+            $x['id'] - \ceil($startX / $this->tileSize),
+            $y['id'] - \ceil($startY / $this->tileSize)
         );
         $this->tileBottomRight = new XY(
-            $x['id'] - 1 + \ceil($rightSize / 256),
-            $y['id'] - 1 + \ceil($bottomSize / 256)
+            $x['id'] - 1 + \ceil($rightSize / $this->tileSize),
+            $y['id'] - 1 + \ceil($bottomSize / $this->tileSize)
         );
 
         $this->latLngTopLeft = new LatLng(
-            static::yTileToLat($this->tileTopLeft->getY(), $this->mapCropTopLeft->getY(), $zoom),
-            static::xTileToLng($this->tileTopLeft->getX(), $this->mapCropTopLeft->getX(), $zoom)
+            static::yTileToLat($this->tileTopLeft->getY(), $this->mapCropTopLeft->getY(), $zoom, $this->tileSize),
+            static::xTileToLng($this->tileTopLeft->getX(), $this->mapCropTopLeft->getX(), $zoom, $this->tileSize)
         );
         $this->latLngTopRight = new LatLng(
-            static::yTileToLat($this->tileTopLeft->getY(), $this->mapCropTopLeft->getY(), $zoom),
-            static::xTileToLng($this->tileBottomRight->getX(), 256 - $this->mapCropBottomRight->getX(), $zoom)
+            static::yTileToLat($this->tileTopLeft->getY(), $this->mapCropTopLeft->getY(), $zoom, $this->tileSize),
+            static::xTileToLng($this->tileBottomRight->getX(), $this->tileSize - $this->mapCropBottomRight->getX(), $zoom, $this->tileSize)
         );
         $this->latLngBottomLeft = new LatLng(
-            static::yTileToLat($this->tileBottomRight->getY(), 256 - $this->mapCropBottomRight->getY(), $zoom),
-            static::xTileToLng($this->tileTopLeft->getX(), $this->mapCropTopLeft->getX(), $zoom)
+            static::yTileToLat($this->tileBottomRight->getY(), $this->tileSize - $this->mapCropBottomRight->getY(), $zoom, $this->tileSize),
+            static::xTileToLng($this->tileTopLeft->getX(), $this->mapCropTopLeft->getX(), $zoom, $this->tileSize)
         );
         $this->latLngBottomRight = new LatLng(
-            static::yTileToLat($this->tileBottomRight->getY(), 256 - $this->mapCropBottomRight->getY(), $zoom),
-            static::xTileToLng($this->tileBottomRight->getX(), 256 - $this->mapCropBottomRight->getX(), $zoom)
+            static::yTileToLat($this->tileBottomRight->getY(), $this->tileSize - $this->mapCropBottomRight->getY(), $zoom, $this->tileSize),
+            static::xTileToLng($this->tileBottomRight->getX(), $this->tileSize - $this->mapCropBottomRight->getX(), $zoom, $this->tileSize)
         );
     }
-
 
 
     /**
@@ -244,6 +252,15 @@ class MapData
         return $this->zoom;
     }
 
+    /**
+     * Get tile size
+     * @return int tile size
+     */
+    public function getTileSize(): int
+    {
+        return $this->tileSize;
+    }
+
 
     /**
      * Get top left tile numbers
@@ -289,12 +306,12 @@ class MapData
      */
     public function convertLatLngToPxPosition(LatLng $latLng): XY
     {
-        $x = static::lngToXTile($latLng->getLng(), $this->zoom);
-        $y = static::latToYTile($latLng->getLat(), $this->zoom);
+        $x = static::lngToXTile($latLng->getLng(), $this->zoom, $this->tileSize);
+        $y = static::latToYTile($latLng->getLat(), $this->zoom, $this->tileSize);
 
         return new XY(
-            ($x['id'] - $this->tileTopLeft->getX()) * 256 - $this->mapCropTopLeft->getX() + $x['position'],
-            ($y['id'] - $this->tileTopLeft->getY()) * 256 - $this->mapCropTopLeft->getY() + $y['position']
+            ($x['id'] - $this->tileTopLeft->getX()) * $this->tileSize - $this->mapCropTopLeft->getX() + $x['position'],
+            ($y['id'] - $this->tileTopLeft->getY()) * $this->tileSize - $this->mapCropTopLeft->getY() + $y['position']
         );
     }
 }

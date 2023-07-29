@@ -15,6 +15,8 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 
 ## Methods
 
+- *(static)* [createFromLatLngZoom](#createfromlatlngzoom) 
+- *(static)* [createFromBoundingBox](#createfromboundingbox) 
 - [__construct](#-__construct) 
 - [addLayer](#-addlayer) 
 - [addMarkers](#-addmarkers) 
@@ -22,6 +24,67 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 - [getMapData](#-getmapdata) 
 - [getImage](#-getimage) 
 
+### ::createFromLatLngZoom
+
+Create new instance of OpenStreetMap.
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `centerMap` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the map center |
+| `zoom` | **int** | Zoom |
+| `imageWidth` | **int** | Width of the generated map image |
+| `imageHeight` | **int** | Height of the generated map image |
+| `tileLayer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | Tile server configuration, defaults to OpenStreetMaps tile server |
+| `tileSize` | **int** | Tile size in pixels |
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\OpenStreetMap** : 
+
+
+
+---
+### ::createFromBoundingBox
+
+Create new instance of OpenStreetMap.
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `topLeft` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the map top left |
+| `bottomRight` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Latitude and longitude of the map bottom right |
+| `padding` | **int** | Padding to add before top left and after bottom right position. |
+| `imageWidth` | **int** | Width of the generated map image |
+| `imageHeight` | **int** | Height of the generated map image |
+| `tileLayer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | Tile server configuration, defaults to OpenStreetMaps tile server |
+| `tileSize` | **int** | Tile size in pixels |
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\OpenStreetMap** : 
+
+
+
+---
 ### ->__construct
 
 OpenStreetMap constructor.
@@ -41,7 +104,8 @@ OpenStreetMap constructor.
 | `zoom` | **int** | Zoom |
 | `imageWidth` | **int** | Width of the generated map image |
 | `imageHeight` | **int** | Height of the generated map image |
-| `tileServer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | Tile server configuration, defaults to OpenStreetMaps tile server |
+| `tileLayer` | **\DantSu\OpenStreetMapStaticAPI\TileLayer** | Tile server configuration, defaults to OpenStreetMaps tile server |
+| `tileSize` | **int** | Tile size in pixels |
 
 
 
@@ -169,4 +233,4 @@ Get the map image with markers and lines.
 
 
 ---
-> Automatically generated from source code comments on 2022-05-31 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2023-07-30 using [phpDocumentor](http://www.phpdoc.org/)

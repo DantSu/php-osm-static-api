@@ -16,6 +16,65 @@ use DantSu\PHPImageEditor\Image;
 class OpenStreetMap
 {
     /**
+     * Create new instance of OpenStreetMap.
+     * @param LatLng $centerMap Latitude and longitude of the map center
+     * @param int $zoom Zoom
+     * @param int $imageWidth Width of the generated map image
+     * @param int $imageHeight Height of the generated map image
+     * @param TileLayer $tileLayer Tile server configuration, defaults to OpenStreetMaps tile server
+     * @param int $tileSize Tile size in pixels
+     */
+    public static function createFromLatLngZoom(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileLayer $tileLayer = null, int $tileSize = 256): OpenStreetMap
+    {
+        return new OpenStreetMap($centerMap, $zoom, $imageWidth, $imageHeight, $tileLayer, $tileSize);
+    }
+
+    /**
+     * Create new instance of OpenStreetMap.
+     * @param LatLng $topLeft Latitude and longitude of the map top left
+     * @param LatLng $bottomRight Latitude and longitude of the map bottom right
+     * @param int $padding Padding to add before top left and after bottom right position.
+     * @param int $imageWidth Width of the generated map image
+     * @param int $imageHeight Height of the generated map image
+     * @param TileLayer $tileLayer Tile server configuration, defaults to OpenStreetMaps tile server
+     * @param int $tileSize Tile size in pixels
+     * @return OpenStreetMap
+     */
+    public static function createFromBoundingBox(LatLng $topLeft, LatLng $bottomRight, int $padding, int $imageWidth, int $imageHeight, TileLayer $tileLayer = null, int $tileSize = 256): OpenStreetMap
+    {
+        if ($tileLayer === null) {
+            $tileLayer = TileLayer::defaultTileLayer();
+        }
+
+        $padding *= 2;
+        $maxZoom = $tileLayer->getMaxZoom();
+
+        $topTilePos = MapData::latToYTile($topLeft->getLat(), $maxZoom, $tileSize);
+        $bottomTilePos = MapData::latToYTile($bottomRight->getLat(), $maxZoom, $tileSize);
+        $leftTilePos = MapData::lngToXTile($topLeft->getLng(), $maxZoom, $tileSize);
+        $rightTilePos = MapData::lngToXTile($bottomRight->getLng(), $maxZoom, $tileSize);
+        $pxZoneWidth = ($rightTilePos['id'] - $leftTilePos['id']) * $tileSize + $rightTilePos['position'] - $leftTilePos['position'];
+        $pxZoneHeight = ($bottomTilePos['id'] - $topTilePos['id']) * $tileSize + $bottomTilePos['position'] - $topTilePos['position'];
+
+        return new OpenStreetMap(
+            MapData::getCenter($topLeft, $bottomRight),
+            \floor(
+                \log(
+                    \min(
+                        1,
+                        ($imageHeight - $padding) / $pxZoneHeight,
+                        ($imageWidth - $padding) / $pxZoneWidth
+                    ) * \pow(2, $maxZoom)
+                ) / 0.69314
+            ),
+            $imageWidth,
+            $imageHeight,
+            $tileLayer,
+            $tileSize
+        );
+    }
+
+    /**
      * @var MapData Data about the generated map (bounding box, size, OSM tile ids...)
      */
     protected $mapData;
@@ -38,12 +97,17 @@ class OpenStreetMap
      * @param int $zoom Zoom
      * @param int $imageWidth Width of the generated map image
      * @param int $imageHeight Height of the generated map image
-     * @param TileLayer $tileServer Tile server configuration, defaults to OpenStreetMaps tile server
+     * @param TileLayer $tileLayer Tile server configuration, defaults to OpenStreetMaps tile server
+     * @param int $tileSize Tile size in pixels
      */
-    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileLayer $tileServer = null)
+    public function __construct(LatLng $centerMap, int $zoom, int $imageWidth, int $imageHeight, TileLayer $tileLayer = null, int $tileSize = 256)
     {
-        $this->mapData = new MapData($centerMap, $zoom, new XY($imageWidth, $imageHeight));
-        $this->layers = [$tileServer === null ? TileLayer::defaultTileLayer() : $tileServer];
+        if ($tileLayer === null) {
+            $tileLayer = TileLayer::defaultTileLayer();
+        }
+
+        $this->mapData = new MapData($centerMap, $tileLayer->checkZoom($zoom), new XY($imageWidth, $imageHeight), $tileSize);
+        $this->layers = [$tileLayer];
     }
 
     /**
@@ -101,14 +165,15 @@ class OpenStreetMap
         $startY = $this->mapData->getMapCropTopLeft()->getY() * -1;
 
         $image = Image::newCanvas($imgSize->getX(), $imgSize->getY());
+        $tileSize = $this->mapData->getTileSize();
 
         foreach ($this->layers as $tileLayer) {
             $yTile = $this->mapData->getTileTopLeft()->getY();
-            for ($y = $startY; $y < $imgSize->getY(); $y += 256) {
+            for ($y = $startY; $y < $imgSize->getY(); $y += $tileSize) {
                 $xTile = $this->mapData->getTileTopLeft()->getX();
-                for ($x = $startX; $x < $imgSize->getX(); $x += 256) {
+                for ($x = $startX; $x < $imgSize->getX(); $x += $tileSize) {
                     $image->pasteOn(
-                        $tileLayer->getTile($xTile, $yTile, $this->mapData->getZoom()),
+                        $tileLayer->getTile($xTile, $yTile, $this->mapData->getZoom(), $tileSize),
                         $x,
                         $y
                     );

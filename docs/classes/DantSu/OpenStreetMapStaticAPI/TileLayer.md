@@ -18,6 +18,11 @@ DantSu\OpenStreetMapStaticAPI\TileLayer define tile server url and related confi
 - *(static)* [defaultTileLayer](#defaulttilelayer) 
 - [__construct](#-__construct) 
 - [setOpacity](#-setopacity) 
+- [setMaxZoom](#-setmaxzoom) 
+- [getMaxZoom](#-getmaxzoom) 
+- [setMinZoom](#-setminzoom) 
+- [getMinZoom](#-getminzoom) 
+- [checkZoom](#-checkzoom) 
 - [getTileUrl](#-gettileurl) 
 - [getAttributionText](#-getattributiontext) 
 - [getTile](#-gettile) 
@@ -89,6 +94,119 @@ Set opacity of the layer
 
 
 ---
+### ->setMaxZoom
+
+Set a max zoom value
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `maxZoom` | **int** |  |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->getMaxZoom
+
+Get max zoom value
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **int** : 
+
+
+
+---
+### ->setMinZoom
+
+Set a min zoom value
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `minZoom` | **int** |  |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->getMinZoom
+
+Get min zoom value
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **int** : 
+
+
+
+---
+### ->checkZoom
+
+Check if zoom value is between min zoom and max zoom
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `zoom` | **int** | Zoom value to be checked |
+
+
+#### Return Value:
+
+ **int** : 
+
+
+
+---
 ### ->getTileUrl
 
 Get tile url for coordinates and zoom level
@@ -153,6 +271,7 @@ Get an image tile
 | `x` | **float** |  |
 | `y` | **float** |  |
 | `z` | **int** |  |
+| `tileSize` | **int** |  |
 
 
 #### Return Value:
@@ -165,4 +284,4 @@ Get an image tile
 
 
 ---
-> Automatically generated from source code comments on 2022-05-31 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2023-07-30 using [phpDocumentor](http://www.phpdoc.org/)

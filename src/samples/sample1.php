@@ -14,7 +14,7 @@ use \DantSu\OpenStreetMapStaticAPI\Polygon;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
 
 \header('Content-type: image/png');
-(new OpenStreetMap(new LatLng(44.351933, 2.568113), 17, 600, 400))
+OpenStreetMap::createFromBoundingBox(new LatLng(44.352887, 2.565672), new LatLng(44.351172, 2.571092), 10, 600, 400)
     ->addMarkers(
         (new Markers(__DIR__ . '/resources/marker.png'))
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)

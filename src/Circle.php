@@ -96,7 +96,7 @@ class Circle implements Draw
         $edge = $mapData->convertLatLngToPxPosition($this->edge);
 
         $angleAndLenght = Geometry2D::getAngleAndLengthFromPoints($center->getX(), $center->getY(), $edge->getX(), $edge->getY());
-        $length = $angleAndLenght['length'] + $this->strokeWeight / 2;
+        $length = \round($angleAndLenght['length'] + $this->strokeWeight / 2);
 
         $dImage = Image::newCanvas($image->getWidth(), $image->getHeight());
 
