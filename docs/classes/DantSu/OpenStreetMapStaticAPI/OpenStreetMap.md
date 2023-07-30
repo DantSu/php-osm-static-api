@@ -22,6 +22,9 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 - [addMarkers](#-addmarkers) 
 - [addDraw](#-adddraw) 
 - [fitToDraws](#-fittodraws) 
+- [fitToMarkers](#-fittomarkers) 
+- [fitToMarkersAndDraws](#-fittomarkersanddraws) 
+- [fitToPoints](#-fittopoints) 
 - [getMapData](#-getmapdata) 
 - [getImage](#-getimage) 
 
@@ -202,6 +205,82 @@ Fit map to draws.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
+| `padding` | **int** | Padding in pixel |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->fitToMarkers
+
+Fit map to markers.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `padding` | **int** | Padding in pixel |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->fitToMarkersAndDraws
+
+Fit map to draws and markers.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `padding` | **int** | Padding in pixel |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->fitToPoints
+
+Fit map to an array of points.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `points` | **\DantSu\OpenStreetMapStaticAPI\LatLng[]** | LatLng points |
 | `padding` | **int** | Padding in pixel |
 
 

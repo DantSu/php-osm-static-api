@@ -135,7 +135,7 @@ class OpenStreetMap
     }
 
     /**
-     * Fit map to draws.
+     * Fit map to markers.
      *
      * @param int $padding Padding in pixel
      * @return $this Fluent interface
@@ -150,7 +150,7 @@ class OpenStreetMap
     }
 
     /**
-     * Fit map to draws.
+     * Fit map to draws and markers.
      *
      * @param int $padding Padding in pixel
      * @return $this Fluent interface
@@ -168,7 +168,7 @@ class OpenStreetMap
     }
 
     /**
-     * Fit map to points.
+     * Fit map to an array of points.
      *
      * @param LatLng[] $points LatLng points
      * @param int $padding Padding in pixel
