@@ -131,10 +131,51 @@ class OpenStreetMap
         foreach ($this->draws as $draw) {
             $points = \array_merge($points, $draw->getBoundingBox());
         }
+        return $this->fitToPoints($points, $padding);
+    }
 
+    /**
+     * Fit map to draws.
+     *
+     * @param int $padding Padding in pixel
+     * @return $this Fluent interface
+     */
+    public function fitToMarkers(int $padding = 0)
+    {
+        $points = [];
         foreach ($this->markers as $markers) {
             $points = \array_merge($points, $markers->getBoundingBox());
         }
+        return $this->fitToPoints($points, $padding);
+    }
+
+    /**
+     * Fit map to draws.
+     *
+     * @param int $padding Padding in pixel
+     * @return $this Fluent interface
+     */
+    public function fitToMarkersAndDraws(int $padding = 0)
+    {
+        $points = [];
+        foreach ($this->draws as $draw) {
+            $points = \array_merge($points, $draw->getBoundingBox());
+        }
+        foreach ($this->markers as $markers) {
+            $points = \array_merge($points, $markers->getBoundingBox());
+        }
+        return $this->fitToPoints($points, $padding);
+    }
+
+    /**
+     * Fit map to points.
+     *
+     * @param LatLng[] $points LatLng points
+     * @param int $padding Padding in pixel
+     * @return $this Fluent interface
+     */
+    public function fitToPoints(array $points, int $padding = 0)
+    {
         $outputSize = $this->mapData->getOutputSize();
         $tileSize = $this->mapData->getTileSize();
         $boundingBox = MapData::getBoundingBoxFromPoints($points);
