@@ -28,6 +28,7 @@ class GeographicConverter
 
     /**
      * Convert distance and angle from a point to latitude and longitude
+     * 0 : top, 90 : right; 180 : bottom, 270 : left
      *
      * @param LatLng $from Starting coordinate
      * @param float $distance Distance in meters
@@ -55,6 +56,25 @@ class GeographicConverter
                 )
             )
         );
+    }
+
+    /**
+     * Get distance in meters between two points.
+     *
+     * @param LatLng $from Starting coordinate
+     * @param LatLng $end Ending coordinate
+     * @return float
+     */
+    public static function latLngToMeters(LatLng $from, LatLng $end): float
+    {
+        $earthRadius = self::earthRadiusAtLatitude($from->getLat());
+        $lat1 = \deg2rad($from->getLat());
+        $lat2 = \deg2rad($end->getLat());
+        $lat = \deg2rad($end->getLat() - $from->getLat());
+        $lng = \deg2rad($end->getLng() - $from->getLng());
+
+        $a = \pow(\sin($lat / 2), 2) + \cos($lat1) * \cos($lat2) * \pow(\sin($lng / 2), 2);
+        return \abs($earthRadius * 2 * \atan2(\sqrt($a), \sqrt(1 - $a)));
     }
 
 }

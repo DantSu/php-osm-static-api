@@ -111,4 +111,13 @@ class Markers
 
         return $this;
     }
+
+    /**
+     * Get bounding box of markers
+     * @return LatLng[]
+     */
+    public function getBoundingBox(): array
+    {
+        return MapData::getBoundingBoxFromPoints($this->coordinates);
+    }
 }

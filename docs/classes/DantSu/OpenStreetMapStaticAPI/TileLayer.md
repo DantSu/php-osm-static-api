@@ -64,6 +64,8 @@ TileLayer constructor
 | `url` | **string** | tile server url with placeholders (`x`, `y`, `z`, `r`, `s`) |
 | `attributionText` | **string** | tile server attribution text |
 | `subdomains` | **string** | tile server subdomains |
+| `curlOptions` | **array** | Array of curl options |
+| `failCurlOnError` | **bool** | If true, curl will throw an exception on error. |
 
 
 

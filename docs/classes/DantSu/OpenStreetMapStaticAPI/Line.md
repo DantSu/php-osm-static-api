@@ -19,6 +19,7 @@ DantSu\OpenStreetMapStaticAPI\Line draw line on the map.
 - [__construct](#-__construct) 
 - [addPoint](#-addpoint) 
 - [draw](#-draw) 
+- [getBoundingBox](#-getboundingbox) 
 
 ### ->__construct
 
@@ -94,6 +95,25 @@ Draw the line on the map image.
 #### See Also:
 
 * https://github.com/DantSu/php-image-editor - See more about DantSu\PHPImageEditor\Image
+
+---
+### ->getBoundingBox
+
+Get bounding box of the shape
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng[]** : 
+
+
 
 ---
 

@@ -20,6 +20,7 @@ DantSu\OpenStreetMapStaticAPI\Circle draw circle on the map.
 - [setEdgePoint](#-setedgepoint) 
 - [setRadius](#-setradius) 
 - [draw](#-draw) 
+- [getBoundingBox](#-getboundingbox) 
 
 ### ->__construct
 
@@ -122,6 +123,25 @@ Draw the circle on the map image.
 #### See Also:
 
 * https://github.com/DantSu/php-image-editor - See more about DantSu\PHPImageEditor\Image
+
+---
+### ->getBoundingBox
+
+Get bounding box of the shape
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng[]** : 
+
+
 
 ---
 

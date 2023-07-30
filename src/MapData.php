@@ -81,6 +81,7 @@ class MapData
      */
     public static function getCenter(LatLng $point1, LatLng $point2): LatLng
     {
+        //return new LatLng(($point1->getLat() + $point2->getLat()) / 2, ($point1->getLng() + $point2->getLng()) / 2);
         $dLng = \deg2rad($point2->getLng() - $point1->getLng());
         $lat1 = \deg2rad($point1->getLat());
         $lat2 = \deg2rad($point2->getLat());
@@ -88,11 +89,77 @@ class MapData
         $bx = \cos($lat2) * \cos($dLng);
         $by = \cos($lat2) * \sin($dLng);
         return new LatLng(
-            \rad2deg(\atan2(\sin($lat1) + \sin($lat2), \sqrt((\cos($lat1) + $bx) * (\cos($lat1) + $bx) + $by * $by))),
+            \rad2deg(\atan2(\sin($lat1) + \sin($lat2), \sqrt(\pow(\cos($lat1) + $bx, 2) + \pow($by, 2)))),
             \rad2deg($lng1 + \atan2($by, \cos($lat1) + $bx))
         );
     }
 
+    /**
+     * Transform array of LatLng to bounding box
+     *
+     * @param LatLng[] $points
+     * @return LatLng[]
+     */
+    public static function getBoundingBoxFromPoints(array $points): array
+    {
+        $minLat = 360;
+        $maxLat = -360;
+        $minLng = 360;
+        $maxLng = -360;
+        foreach ($points as $point) {
+            if ($point->getLat() < $minLat) {
+                $minLat = $point->getLat();
+            }
+            if ($point->getLat() > $maxLat) {
+                $maxLat = $point->getLat();
+            }
+            if ($point->getLng() < $minLng) {
+                $minLng = $point->getLng();
+            }
+            if ($point->getLng() > $maxLng) {
+                $maxLng = $point->getLng();
+            }
+        }
+        return [new LatLng($maxLat, $minLng), new LatLng($minLat, $maxLng)];
+    }
+
+    /**
+     * Get center and zoom from two points.
+     *
+     * @param LatLng $topLeft
+     * @param LatLng $bottomRight
+     * @param int $padding
+     * @param int $imageWidth
+     * @param int $imageHeight
+     * @param int $tileSize
+     * @return array center : LatLng, zoom : int
+     */
+    public static function getCenterAndZoomFromBoundingBox(LatLng $topLeft, LatLng $bottomRight, int $padding, int $imageWidth, int $imageHeight, int $tileSize): array
+    {
+        $zoom = 20;
+        $padding *= 2;
+        $topTilePos = MapData::latToYTile($topLeft->getLat(), $zoom, $tileSize);
+        $bottomTilePos = MapData::latToYTile($bottomRight->getLat(), $zoom, $tileSize);
+        $leftTilePos = MapData::lngToXTile($topLeft->getLng(), $zoom, $tileSize);
+        $rightTilePos = MapData::lngToXTile($bottomRight->getLng(), $zoom, $tileSize);
+        $pxZoneWidth = ($rightTilePos['id'] - $leftTilePos['id']) * $tileSize + $rightTilePos['position'] - $leftTilePos['position'];
+        $pxZoneHeight = ($bottomTilePos['id'] - $topTilePos['id']) * $tileSize + $bottomTilePos['position'] - $topTilePos['position'];
+
+        return [
+            'center' => MapData::getCenter($topLeft, $bottomRight),
+            'zoom' => \intval(
+                \floor(
+                    \log(
+                        \min(
+                            1,
+                            ($imageHeight - $padding) / $pxZoneHeight,
+                            ($imageWidth - $padding) / $pxZoneWidth
+                        ) * \pow(2, $zoom)
+                    ) / 0.69314
+                )
+            )
+        ];
+    }
 
     /**
      * @var int zoom
@@ -314,4 +381,6 @@ class MapData
             ($y['id'] - $this->tileTopLeft->getY()) * $this->tileSize - $this->mapCropTopLeft->getY() + $y['position']
         );
     }
+
+
 }

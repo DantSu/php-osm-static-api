@@ -12,6 +12,25 @@
 
 ## Methods
 
+### ->getBoundingBox
+
+
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **array** : 
+
+
+
+---
 ### ->draw
 
 

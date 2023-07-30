@@ -30,6 +30,7 @@ DantSu\OpenStreetMapStaticAPI\Markers display markers on the map.
 - [addMarker](#-addmarker) 
 - [setAnchor](#-setanchor) 
 - [draw](#-draw) 
+- [getBoundingBox](#-getboundingbox) 
 
 ### ->__construct
 
@@ -130,6 +131,25 @@ Draw markers on the image map.
 #### See Also:
 
 * https://github.com/DantSu/php-image-editor - See more about DantSu\PHPImageEditor\Image
+
+---
+### ->getBoundingBox
+
+Get bounding box of markers
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng[]** : 
+
+
 
 ---
 

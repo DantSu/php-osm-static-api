@@ -21,6 +21,7 @@ DantSu\OpenStreetMapStaticAPI\OpenStreetMap is a PHP library created for easily 
 - [addLayer](#-addlayer) 
 - [addMarkers](#-addmarkers) 
 - [addDraw](#-adddraw) 
+- [fitToDraws](#-fittodraws) 
 - [getMapData](#-getmapdata) 
 - [getImage](#-getimage) 
 
@@ -177,6 +178,31 @@ Add a line on the map
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `draw` | **\DantSu\OpenStreetMapStaticAPI\Interfaces\Draw** | An instance of Line |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->fitToDraws
+
+Fit map to draws.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `padding` | **int** | Padding in pixel |
 
 
 #### Return Value:

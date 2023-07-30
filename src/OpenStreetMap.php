@@ -46,32 +46,8 @@ class OpenStreetMap
             $tileLayer = TileLayer::defaultTileLayer();
         }
 
-        $padding *= 2;
-        $maxZoom = $tileLayer->getMaxZoom();
-
-        $topTilePos = MapData::latToYTile($topLeft->getLat(), $maxZoom, $tileSize);
-        $bottomTilePos = MapData::latToYTile($bottomRight->getLat(), $maxZoom, $tileSize);
-        $leftTilePos = MapData::lngToXTile($topLeft->getLng(), $maxZoom, $tileSize);
-        $rightTilePos = MapData::lngToXTile($bottomRight->getLng(), $maxZoom, $tileSize);
-        $pxZoneWidth = ($rightTilePos['id'] - $leftTilePos['id']) * $tileSize + $rightTilePos['position'] - $leftTilePos['position'];
-        $pxZoneHeight = ($bottomTilePos['id'] - $topTilePos['id']) * $tileSize + $bottomTilePos['position'] - $topTilePos['position'];
-
-        return new OpenStreetMap(
-            MapData::getCenter($topLeft, $bottomRight),
-            \floor(
-                \log(
-                    \min(
-                        1,
-                        ($imageHeight - $padding) / $pxZoneHeight,
-                        ($imageWidth - $padding) / $pxZoneWidth
-                    ) * \pow(2, $maxZoom)
-                ) / 0.69314
-            ),
-            $imageWidth,
-            $imageHeight,
-            $tileLayer,
-            $tileSize
-        );
+        $latLngZoom = MapData::getCenterAndZoomFromBoundingBox($topLeft, $bottomRight, $padding, $imageWidth, $imageHeight, $tileSize);
+        return new OpenStreetMap($latLngZoom['center'], $latLngZoom['zoom'], $imageWidth, $imageHeight, $tileLayer, $tileSize);
     }
 
     /**
@@ -140,6 +116,30 @@ class OpenStreetMap
     public function addDraw(Draw $draw)
     {
         $this->draws[] = $draw;
+        return $this;
+    }
+
+    /**
+     * Fit map to draws.
+     *
+     * @param int $padding Padding in pixel
+     * @return $this Fluent interface
+     */
+    public function fitToDraws(int $padding = 0)
+    {
+        $points = [];
+        foreach ($this->draws as $draw) {
+            $points = \array_merge($points, $draw->getBoundingBox());
+        }
+
+        foreach ($this->markers as $markers) {
+            $points = \array_merge($points, $markers->getBoundingBox());
+        }
+        $outputSize = $this->mapData->getOutputSize();
+        $tileSize = $this->mapData->getTileSize();
+        $boundingBox = MapData::getBoundingBoxFromPoints($points);
+        $latLngZoom = MapData::getCenterAndZoomFromBoundingBox($boundingBox[0], $boundingBox[1], $padding, $outputSize->getX(), $outputSize->getY(), $tileSize);
+        $this->mapData = new MapData($latLngZoom['center'], $this->layers[0]->checkZoom($latLngZoom['zoom']), $outputSize, $tileSize);
         return $this;
     }
 

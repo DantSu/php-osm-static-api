@@ -110,4 +110,18 @@ class Circle implements Draw
         return $this;
     }
 
+
+    /**
+     * Get bounding box of the shape
+     * @return LatLng[]
+     */
+    public function getBoundingBox(): array
+    {
+        $distance = GeographicConverter::latLngToMeters($this->center, $this->edge);
+        $latLng1 = GeographicConverter::metersToLatLng($this->center,  $distance, 0);
+        $latLng2 = GeographicConverter::metersToLatLng($this->center,  $distance, 90);
+        $latLng3 = GeographicConverter::metersToLatLng($this->center,  $distance, 180);
+        $latLng4 = GeographicConverter::metersToLatLng($this->center,  $distance, 270);
+        return [new LatLng($latLng1->getLat(), $latLng4->getLng()), new LatLng($latLng3->getLat(), $latLng2->getLng())];
+    }
 }

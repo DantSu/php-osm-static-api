@@ -14,7 +14,7 @@ use \DantSu\OpenStreetMapStaticAPI\Circle;
 use \DantSu\OpenStreetMapStaticAPI\Markers;
 
 \header('Content-type: image/png');
-(new OpenStreetMap(new LatLng(44.351933, 2.568113), 17, 600, 400))
+(new OpenStreetMap(new LatLng(0, 0), 0, 600, 400))
     ->addMarkers(
         (new Markers(__DIR__ . '/resources/marker.png'))
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)
@@ -40,6 +40,7 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
         ))
             ->setRadius(40)
     )
+    ->fitToDraws(10)
     ->getImage()
     ->displayPNG();
 

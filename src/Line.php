@@ -78,4 +78,13 @@ class Line implements Draw
         }
         return $this;
     }
+
+    /**
+     * Get bounding box of the shape
+     * @return LatLng[]
+     */
+    public function getBoundingBox(): array
+    {
+        return MapData::getBoundingBoxFromPoints($this->points);
+    }
 }

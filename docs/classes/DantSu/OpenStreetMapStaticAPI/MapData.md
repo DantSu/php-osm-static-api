@@ -20,6 +20,8 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - *(static)* [xTileToLng](#xtiletolng) 
 - *(static)* [yTileToLat](#ytiletolat) 
 - *(static)* [getCenter](#getcenter) 
+- *(static)* [getBoundingBoxFromPoints](#getboundingboxfrompoints) 
+- *(static)* [getCenterAndZoomFromBoundingBox](#getcenterandzoomfromboundingbox) 
 - [__construct](#-__construct) 
 - [getLatLngTopLeft](#-getlatlngtopleft) 
 - [getLatLngTopRight](#-getlatlngtopright) 
@@ -166,6 +168,61 @@ Get center between two coordinates.
 #### Return Value:
 
  **\DantSu\OpenStreetMapStaticAPI\LatLng** : midpoint between the given coordinates
+
+
+
+---
+### ::getBoundingBoxFromPoints
+
+Transform array of LatLng to bounding box
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `points` | **\DantSu\OpenStreetMapStaticAPI\LatLng[]** |  |
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng[]** : 
+
+
+
+---
+### ::getCenterAndZoomFromBoundingBox
+
+Get center and zoom from two points.
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `topLeft` | **\DantSu\OpenStreetMapStaticAPI\LatLng** |  |
+| `bottomRight` | **\DantSu\OpenStreetMapStaticAPI\LatLng** |  |
+| `padding` | **int** |  |
+| `imageWidth` | **int** |  |
+| `imageHeight` | **int** |  |
+| `tileSize` | **int** |  |
+
+
+#### Return Value:
+
+ **array** : center : LatLng, zoom : int
 
 
 
