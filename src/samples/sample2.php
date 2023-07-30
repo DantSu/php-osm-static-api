@@ -84,7 +84,6 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
             ->addPoint(new LatLng(44.351933, 2.568113))
             ->addPoint(new LatLng(57.704334, 11.963886))
     )
-    ->fitToDraws(10)
     ->getImage()
     ->displayPNG();
 

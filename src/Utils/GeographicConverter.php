@@ -77,4 +77,25 @@ class GeographicConverter
         return \abs($earthRadius * 2 * \atan2(\sqrt($a), \sqrt(1 - $a)));
     }
 
+
+    /**
+     * Get center between two coordinates.
+     * @param LatLng $point1 Vertical OpenStreetMap tile id
+     * @param LatLng $point2 Vertical pixel position on tile
+     * @return LatLng midpoint between the given coordinates
+     */
+    public static function getCenter(LatLng $point1, LatLng $point2): LatLng
+    {
+        //return new LatLng(($point1->getLat() + $point2->getLat()) / 2, ($point1->getLng() + $point2->getLng()) / 2);
+        $dLng = \deg2rad($point2->getLng() - $point1->getLng());
+        $lat1 = \deg2rad($point1->getLat());
+        $lat2 = \deg2rad($point2->getLat());
+        $lng1 = \deg2rad($point1->getLng());
+        $bx = \cos($lat2) * \cos($dLng);
+        $by = \cos($lat2) * \sin($dLng);
+        return new LatLng(
+            \rad2deg(\atan2(\sin($lat1) + \sin($lat2), \sqrt(\pow(\cos($lat1) + $bx, 2) + \pow($by, 2)))),
+            \rad2deg($lng1 + \atan2($by, \cos($lat1) + $bx))
+        );
+    }
 }

@@ -14,6 +14,7 @@
 - *(static)* [earthRadiusAtLatitude](#earthradiusatlatitude) 
 - *(static)* [metersToLatLng](#meterstolatlng) 
 - *(static)* [latLngToMeters](#latlngtometers) 
+- *(static)* [getCenter](#getcenter) 
 
 ### ::earthRadiusAtLatitude
 
@@ -90,6 +91,32 @@ Get distance in meters between two points.
 #### Return Value:
 
  **float** : 
+
+
+
+---
+### ::getCenter
+
+Get center between two coordinates.
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `point1` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical OpenStreetMap tile id |
+| `point2` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical pixel position on tile |
+
+
+#### Return Value:
+
+ **\DantSu\OpenStreetMapStaticAPI\LatLng** : midpoint between the given coordinates
 
 
 

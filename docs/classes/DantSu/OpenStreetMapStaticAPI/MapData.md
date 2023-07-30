@@ -19,7 +19,6 @@ DantSu\OpenStreetMapStaticAPI\MapData convert latitude and longitude to image pi
 - *(static)* [latToYTile](#lattoytile) 
 - *(static)* [xTileToLng](#xtiletolng) 
 - *(static)* [yTileToLat](#ytiletolat) 
-- *(static)* [getCenter](#getcenter) 
 - *(static)* [getBoundingBoxFromPoints](#getboundingboxfrompoints) 
 - *(static)* [getCenterAndZoomFromBoundingBox](#getcenterandzoomfromboundingbox) 
 - [__construct](#-__construct) 
@@ -142,32 +141,6 @@ Convert vertical OpenStreetMap tile number and zoom to latitude.
 #### Return Value:
 
  **float** : Latitude of the given OpenStreetMap tile id and zoom
-
-
-
----
-### ::getCenter
-
-Get center between two coordinates.
-
-
-
-* This method is **static**.
-
-
-
-
-#### Parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `point1` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical OpenStreetMap tile id |
-| `point2` | **\DantSu\OpenStreetMapStaticAPI\LatLng** | Vertical pixel position on tile |
-
-
-#### Return Value:
-
- **\DantSu\OpenStreetMapStaticAPI\LatLng** : midpoint between the given coordinates
 
 
 
