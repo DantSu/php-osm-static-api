@@ -20,24 +20,14 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
             ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)
             ->addMarker(new LatLng(44.351933, 2.568113))
             ->addMarker(new LatLng(44.351510, 2.570020))
-            ->addMarker(new LatLng(44.351873, 2.566250))
+            ->addMarker(new LatLng(44.351073, 2.566480))
     )
     ->addDraw(
-        (new Circle(
-            new LatLng(44.351933, 2.568113),
-            'FF0000',
-            5,
-            'FF0000CC'
-        ))
+        (new Circle(new LatLng(44.351933, 2.568113), 'FF0000', 5, 'FF0000CC'))
             ->setEdgePoint(new LatLng(44.351510, 2.570020))
     )
     ->addDraw(
-        (new Circle(
-            new LatLng(44.351933, 2.568113),
-            'FF0000',
-            5,
-            'FF0000CC'
-        ))
+        (new Circle(new LatLng(44.351933, 2.568113), 'FF0000', 5, 'FF0000CC'))
             ->setRadius(40)
     )
     ->fitToDraws(10)
