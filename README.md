@@ -22,7 +22,7 @@ composer require dantsu/php-osm-static-api
 
 ## How to use
 
-Generate OpenStreetMap static image with marker and line :
+### Generate OpenStreetMap static image with markers and polygon :
 
 ```php
 use \DantSu\OpenStreetMapStaticAPI\OpenStreetMap;
@@ -53,6 +53,44 @@ use \DantSu\OpenStreetMapStaticAPI\Markers;
 ```
 
 ![Exported OpenStreetMap image](./src/samples/resources/sample1.png)
+
+### Align and zoom the map to drawings and markers :
+
+- `->fitToDraws(int $padding = 0)`
+- `->fitToMarkers(int $padding = 0)`
+- `->fitToDrawsAndMarkers(int $padding = 0)`
+- `->fitToPoints(LatLng[] $points, int $padding = 0)`
+
+`$padding` sets the amount of padding in the borders of the map that shouldn't be accounted for when setting the view to fit bounds. This can be positive or negative according to your needs.
+
+```php
+use \DantSu\OpenStreetMapStaticAPI\OpenStreetMap;
+use \DantSu\OpenStreetMapStaticAPI\LatLng;
+use \DantSu\OpenStreetMapStaticAPI\Polygon;
+use \DantSu\OpenStreetMapStaticAPI\Markers;
+
+\header('Content-type: image/png');
+(new OpenStreetMap(new LatLng(0, 0), 0, 600, 400))
+    ->addMarkers(
+        (new Markers(__DIR__ . '/resources/marker.png'))
+            ->setAnchor(Markers::ANCHOR_CENTER, Markers::ANCHOR_BOTTOM)
+            ->addMarker(new LatLng(44.351933, 2.568113))
+            ->addMarker(new LatLng(44.351510, 2.570020))
+            ->addMarker(new LatLng(44.351873, 2.566250))
+    )
+    ->addDraw(
+        (new Polygon('FF0000', 2, 'FF0000DD'))
+            ->addPoint(new LatLng(44.351172, 2.571092))
+            ->addPoint(new LatLng(44.352097, 2.570045))
+            ->addPoint(new LatLng(44.352665, 2.568107))
+            ->addPoint(new LatLng(44.352887, 2.566503))
+            ->addPoint(new LatLng(44.352806, 2.565972))
+            ->addPoint(new LatLng(44.351517, 2.565672))
+    )
+    ->fitToDraws(10)
+    ->getImage()
+    ->displayPNG();
+```
 
 ## Documentation
 
