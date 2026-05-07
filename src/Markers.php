@@ -39,9 +39,19 @@ class Markers
      */
     private $coordinates = [];
 
-    public function __construct($pathImage)
+    /**
+     * Markers constructor.
+     *
+     * @param string|Image $image Path to the image or an instance of Image
+     */
+    public function __construct($image)
     {
-        $this->image = Image::fromPath($pathImage);
+        // If the pathImage is already an instance of Image, we use it directly
+        if ($image instanceof Image) {
+            $this->image = $image;
+        } else {
+            $this->image = Image::fromPath($image);
+        }
     }
 
     /**
